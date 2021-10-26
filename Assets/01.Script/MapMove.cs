@@ -11,10 +11,9 @@ public class MapMove : MonoBehaviour
     {
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        doEnter = !doEnter;
-        if (doEnter)
+        if (!doEnter)
         {
             Camera.main.transform.position = new Vector3(GameManager.Instance.Xs[arr], 0, -10);
         }
@@ -24,5 +23,10 @@ public class MapMove : MonoBehaviour
 
         }
 
+    }
+
+    private void OnTriggerExit2D(Collider2D collsionr)
+    {
+        doEnter = !doEnter;
     }
 }
