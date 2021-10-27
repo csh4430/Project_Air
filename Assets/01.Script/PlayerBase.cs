@@ -21,6 +21,7 @@ public class PlayerBase : MonoBehaviour
 
     private bool isJumping = false;
     private bool isCharging = false;
+    private bool isMove = false;
 
     private void Awake()
     {
@@ -70,6 +71,7 @@ public class PlayerBase : MonoBehaviour
         Debug.DrawLine(transform.position, transform.position + Vector3.right * 1.3f, Color.blue);
         if (playerRigid.velocity.y <= 0)
         {
+            // 점프
             RaycastHit2D jumpRay = Physics2D.Raycast(transform.position, Vector2.down, 1f, LayerMask.GetMask("Floor"));
             if(jumpRay.collider != null)
             {
@@ -79,12 +81,26 @@ public class PlayerBase : MonoBehaviour
                 }
             }
         }
+        // 애가 가로등 뭐시기
         RaycastHit2D objectRay = Physics2D.Raycast(transform.position, Vector2.right, 1f, LayerMask.GetMask("Floor"));
         if (objectRay.collider != null)
         {
             if (objectRay.distance < 1.3f)
             {
-                windRes = 0f;
+                if(Input.GetMouseButtonDown(0))
+                {
+                    isMove = (isMove == true) ? false : true;
+                    if(isMove)
+                    {
+                        windRes = 0;
+                        transform.SetParent(objectRay.transform, true);
+                    }
+                    else
+                    {
+                        transform.SetParent(null);
+                        transform.position -= new Vector3(1, 0, 0);
+                    }
+                }
             }
         }
         else
@@ -109,6 +125,7 @@ public class PlayerBase : MonoBehaviour
 
     public void Move(int dir)
     {
+        if (isMove) return;
         direction = dir;
     }
     
