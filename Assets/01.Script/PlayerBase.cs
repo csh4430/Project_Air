@@ -6,9 +6,13 @@ using UnityEngine.EventSystems;
 
 public class PlayerBase : MonoBehaviour
 {
-    private const float MAX_WIND_RES = 5f;
-    private const float MIN_WIND_RES = 1F;
+    private const float MAX_SPEED = 5;
+    private const float MIN_SPEED = 3;
+    private const int MAX_POWER = 13;
+    private const int MIN_POWER = 3;
 
+
+    [SerializeField] private float DEFAULT_WIND_RES = 0;
     [SerializeField] private float speed = 1;
     [SerializeField] private EventTrigger ET = null;
     [SerializeField] private Vector2 windPosition;
@@ -17,7 +21,9 @@ public class PlayerBase : MonoBehaviour
     private int direction = 0;
     private int jumpPower = 3;
     private int powerRecord = 3;
-    private float windRes = MAX_WIND_RES;
+    [SerializeField] private float windRes = 0f;
+    [SerializeField] private float windPow = 1f;
+    private float windTime = 0;
 
     private bool isJumping = false;
     private bool isCharging = false;
@@ -34,17 +40,18 @@ public class PlayerBase : MonoBehaviour
         pointerDown.callback.AddListener((e) => {
             StartCoroutine(addPower); });
         ET.triggers.Add(pointerDown);
+        StartCoroutine(WindCycle());
     }
     
     void Update()
     {
         if (isCharging)
         {
-            speed = 1;
+            speed = MIN_SPEED;
         }
         else
         {
-            speed = 5;
+            speed = MAX_SPEED;
         }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
@@ -68,11 +75,11 @@ public class PlayerBase : MonoBehaviour
         }
 
         Debug.DrawLine(transform.position, transform.position + Vector3.down * 0.8f, Color.green);
-        Debug.DrawLine(transform.position, transform.position + Vector3.right * 1.3f, Color.blue);
+        Debug.DrawLine(transform.position, transform.position + Vector3.right * 2.3f, Color.blue);
         if (playerRigid.velocity.y <= 0)
         {
             // 점프
-            RaycastHit2D jumpRay = Physics2D.Raycast(transform.position, Vector2.down, 1f, LayerMask.GetMask("Floor"));
+            RaycastHit2D jumpRay = Physics2D.Raycast(transform.position, Vector2.down, Mathf.Infinity, LayerMask.GetMask("Floor"));
             if(jumpRay.collider != null)
             {
                 if (jumpRay.distance < 0.8f)
@@ -82,45 +89,27 @@ public class PlayerBase : MonoBehaviour
             }
         }
         // 애가 가로등 뭐시기
-        RaycastHit2D objectRay = Physics2D.Raycast(transform.position, Vector2.right, 1f, LayerMask.GetMask("Floor"));
+        RaycastHit2D objectRay = Physics2D.Raycast(transform.position, Vector2.right, Mathf.Infinity, LayerMask.GetMask("Floor"));
         if (objectRay.collider != null)
         {
-            if (objectRay.distance < 1.3f)
+            if (objectRay.distance < 2.3f)
             {
-                if(Input.GetMouseButtonDown(0))
-                {
-                    isMove = (isMove == true) ? false : true;
-                    if(isMove)
-                    {
-                        windRes = 0;
-                        transform.SetParent(objectRay.transform, true);
-                    }
-                    else
-                    {
-                        transform.SetParent(null);
-                        transform.position -= new Vector3(1, 0, 0);
-                    }
-                }
+                windRes = windPow;
             }
         }
         else
         {
             if (isJumping)
             {
-                if(powerRecord < 14)
-                    windRes = MAX_WIND_RES + 30;
-                if (powerRecord < 9)
-                    windRes = MAX_WIND_RES + 20;
-                if (powerRecord < 6)
-                    windRes = MAX_WIND_RES + 10;
+                windRes = DEFAULT_WIND_RES/powerRecord + 5;
             }
             else if (!isCharging)
-                windRes = MAX_WIND_RES;
+                windRes = DEFAULT_WIND_RES;
         }
         
         Debug.Log(Mathf.Pow((110 - Vector2.Distance(transform.position, windPosition)) * 0.07f, 2) * windRes * 0.01f);
 
-        playerRigid.velocity = new Vector2(direction * speed - (Mathf.Pow((110 - Vector2.Distance(transform.position, windPosition)) * 0.08f, 2) * windRes * 0.01f), playerRigid.velocity.y);
+        playerRigid.velocity = new Vector2(direction * speed - ((windPow - windRes)*Mathf.Sin(windTime - Mathf.PI / 2) + (windPow - windRes)), playerRigid.velocity.y);
     }
 
     public void Move(int dir)
@@ -136,13 +125,25 @@ public class PlayerBase : MonoBehaviour
             if (!isJumping)
             {
                 isCharging = true;
-                windRes = MIN_WIND_RES;
-                if (jumpPower < 13)
+                windRes = DEFAULT_WIND_RES;
+                if (jumpPower < MAX_POWER)
                     jumpPower++;
             }
             yield return new WaitForSeconds(0.1f);
         }
     }
+
+    private IEnumerator WindCycle()
+    {
+        while (true)
+        {
+            for (windTime = 0; windTime <= 5; windTime += 0.1f)
+            {
+                yield return new WaitForSeconds(0.1f);
+            }
+        }   
+    }
+
     public void Jump()
     {
         StopCoroutine(addPower);
@@ -151,6 +152,6 @@ public class PlayerBase : MonoBehaviour
         if (isJumping) return;
         isJumping = true;
         playerRigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
-        jumpPower = 3;
+        jumpPower = MIN_POWER;
     }
 }
