@@ -25,7 +25,7 @@ public class MapMove : MonoBehaviour
 
     }
 
-    private void OnTriggerExit2D(Collider2D collsionr)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         doEnter = !doEnter;
     }

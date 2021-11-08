@@ -28,6 +28,7 @@ public class PlayerBase : MonoBehaviour
     private bool isJumping = false;
     private bool isCharging = false;
     private bool isMove = false;
+    private bool isHold = false;
 
     private void Awake()
     {
@@ -67,13 +68,12 @@ public class PlayerBase : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            StartCoroutine(addPower);
+            Interaction(FindClosestGameObject());
         }
         if (Input.GetKeyUp(KeyCode.Space))
         {
-            Jump();
+            
         }
-
         Debug.DrawLine(transform.position, transform.position + Vector3.down * 0.8f, Color.green);
         Debug.DrawLine(transform.position, transform.position + Vector3.right * 2.3f, Color.blue);
         if (playerRigid.velocity.y <= 0)
@@ -94,22 +94,28 @@ public class PlayerBase : MonoBehaviour
         {
             if (objectRay.distance < 2.3f)
             {
-                windRes = windPow;
+                if(playerRigid.velocity.x >= 0)
+                    windRes = windPow;
             }
         }
         else
         {
             if (isJumping)
             {
-                windRes = DEFAULT_WIND_RES/powerRecord + 5;
+                windRes = DEFAULT_WIND_RES/powerRecord + 8;
             }
             else if (!isCharging)
                 windRes = DEFAULT_WIND_RES;
         }
-        
-        Debug.Log(Mathf.Pow((110 - Vector2.Distance(transform.position, windPosition)) * 0.07f, 2) * windRes * 0.01f);
 
-        playerRigid.velocity = new Vector2(direction * speed - ((windPow - windRes)*Mathf.Sin(windTime - Mathf.PI / 2) + (windPow - windRes)), playerRigid.velocity.y);
+        //Debug.Log(Mathf.Pow((110 - Vector2.Distance(transform.position, windPosition)) * 0.07f, 2) * windRes * 0.01f);
+
+        if (isHold)
+        {
+            playerRigid.velocity = new Vector2(0, direction * speed);
+        }
+        else
+            playerRigid.velocity = new Vector2(direction * speed - ((windPow - windRes) * Mathf.Sin((2 * Mathf.PI * windTime / 5) - Mathf.PI / 2) + (windPow - windRes)), playerRigid.velocity.y);
     }
 
     public void Move(int dir)
@@ -137,6 +143,7 @@ public class PlayerBase : MonoBehaviour
     {
         while (true)
         {
+            yield return new WaitForSeconds(3f);
             for (windTime = 0; windTime <= 5; windTime += 0.1f)
             {
                 yield return new WaitForSeconds(0.1f);
@@ -153,5 +160,42 @@ public class PlayerBase : MonoBehaviour
         isJumping = true;
         playerRigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
         jumpPower = MIN_POWER;
+    }
+
+    private GameObject FindClosestGameObject()
+    {
+        Collider2D[] allColliderInRange = Physics2D.OverlapCircleAll(playerRigid.transform.position, 1.5f, LayerMask.GetMask("InteractionObject"));
+
+        if (allColliderInRange.Length <= 0) return null;
+
+        float distance = 0f;
+        float leastDis = 0f;
+        int closestCol = 0;
+        for(int i = 0; i < allColliderInRange.Length; i++)
+        {
+            distance = Vector2.Distance(transform.position, allColliderInRange[0].transform.position);
+            if (distance < leastDis)
+            {
+                leastDis = distance;
+                closestCol = i;
+            }
+        }
+
+        Debug.Log(allColliderInRange[closestCol].name);
+        return allColliderInRange[closestCol].gameObject;
+    }
+
+    private void Interaction(GameObject targetObject)
+    {
+        if (targetObject == null) return;
+        switch (targetObject.tag)
+        {
+            case "Street_Light":
+                isHold = !isHold;
+                playerRigid.gravityScale = playerRigid.gravityScale == 0 ? 1.5f : 0;
+                transform.position = new Vector2(targetObject.transform.position.x, transform.position.y);
+                break;
+        }
+        
     }
 }
