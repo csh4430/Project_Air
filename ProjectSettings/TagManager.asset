@@ -7,6 +7,7 @@ TagManager:
   - Street_Light
   - Bus_Stop
   - Traffic_Light
+  - Car
   layers:
   - Default
   - TransparentFX
