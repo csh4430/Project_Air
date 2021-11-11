@@ -27,8 +27,9 @@ public class PlayerBase : MonoBehaviour
 
     private bool isJumping = false;
     private bool isCharging = false;
-    private bool isMove = false;
+    internal bool isMove = false;
     private bool isHold = false;
+
 
     private void Awake()
     {

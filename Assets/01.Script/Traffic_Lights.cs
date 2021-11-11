@@ -7,13 +7,17 @@ using DG.Tweening;
 public class Traffic_Lights : MonoBehaviour
 {
     private Transform car = null;
+    private PlayerBase playerBase = null;
 
     private bool isGreen = false;
 
+    private float time = 0;
     void Start()
     {
+        playerBase = FindObjectOfType<PlayerBase>();
         car = GameObject.FindGameObjectWithTag("Car").transform;
         car.gameObject.SetActive(false);
+        //StartCoroutine(ChangeLights());
     }
 
     private IEnumerator ChangeLights()
@@ -31,18 +35,33 @@ public class Traffic_Lights : MonoBehaviour
     {
         if (!isGreen)
         {
-            car.position = collision.transform.position;
-
-            StartCoroutine(CarMove());
+            time += Time.deltaTime;
+            if(time >= 2)
+            {
+                CarMove(collision);
+            }
+            
         }
     }
 
-    private IEnumerator CarMove()
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        yield return new WaitForSeconds(1);
+        if(!isGreen)
+        {
+            time = 0;
+        }
+    }
+
+    private void CarMove(Collider2D coll)
+    {
+        if(car.transform.position != coll.transform.position)
+            car.position = coll.transform.position;
+        playerBase.isMove = true;
+
         car.gameObject.SetActive(true);
-        car.DOScale(new Vector3(3, 3, 0), 1).SetEase(Ease.Linear);
+        car.DOScale(Vector3.one * 3, 1).SetEase(Ease.Linear);
 
         Debug.Log("Game Over!");
+        time = 0;
     }
 }
