@@ -27,9 +27,9 @@ public class PlayerBase : MonoBehaviour
 
     private bool isJumping = false;
     private bool isCharging = false;
-    internal bool isMove = false;
+    private bool isMove = false;
     private bool isHold = false;
-
+    internal bool isDead = false;
 
     private void Awake()
     {
@@ -110,8 +110,11 @@ public class PlayerBase : MonoBehaviour
         }
 
         //Debug.Log(Mathf.Pow((110 - Vector2.Distance(transform.position, windPosition)) * 0.07f, 2) * windRes * 0.01f);
-
-        if (isHold)
+        if(isDead)
+        {
+            playerRigid.velocity = Vector2.zero;
+        }
+        else if (isHold)
         {
             playerRigid.velocity = new Vector2(0, direction * speed);
         }
