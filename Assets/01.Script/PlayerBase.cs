@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using DG.Tweening;
 
 public class PlayerBase : MonoBehaviour
 {
@@ -30,6 +31,7 @@ public class PlayerBase : MonoBehaviour
     private bool isMove = false;
     private bool isHold = false;
     internal bool isDead = false;
+    internal bool isCrowdExit = false;
 
     private void Awake()
     {
@@ -113,13 +115,28 @@ public class PlayerBase : MonoBehaviour
         if(isDead)
         {
             playerRigid.velocity = Vector2.zero;
+            Debug.Log("Game Over");
         }
         else if (isHold)
         {
             playerRigid.velocity = new Vector2(0, direction * speed);
         }
+        else if(isCrowdExit)
+        {
+            StartCoroutine(PlayerBouncesOff());
+        }
         else
             playerRigid.velocity = new Vector2(direction * speed - ((windPow - windRes) * Mathf.Sin((2 * Mathf.PI * windTime / 5) - Mathf.PI / 2) + (windPow - windRes)), playerRigid.velocity.y);
+    }
+
+    private IEnumerator PlayerBouncesOff()
+    {
+        playerRigid.gravityScale = 0;
+        playerRigid.AddForce(new Vector2(-1, 1) * Time.deltaTime * 30, ForceMode2D.Impulse);
+        transform.DORotate(new Vector3(0, 0, 180), .3f, RotateMode.Fast).SetLoops(-1, LoopType.Incremental);
+        yield return new WaitForSeconds(1);
+        isCrowdExit = false;
+        isDead = true;
     }
 
     public void Move(int dir)
@@ -200,6 +217,5 @@ public class PlayerBase : MonoBehaviour
                 transform.position = new Vector2(targetObject.transform.position.x, transform.position.y);
                 break;
         }
-        
     }
 }

@@ -63,7 +63,6 @@ public class Traffic_Lights : MonoBehaviour
         car.gameObject.SetActive(true);
         car.DOScale(Vector3.one * 3, 1).SetEase(Ease.Linear);
 
-        Debug.Log("Game Over!");
         time = 0;
     }
 }
