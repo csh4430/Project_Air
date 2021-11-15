@@ -6,11 +6,11 @@ using DG.Tweening;
 
 public class Security : MonoBehaviour
 {
-    private const float speed = 5;
+    private float speed = 0;
 
     private Rigidbody2D rb = null;
     private RectTransform rect = null;
-    private Transform playerTr = null;
+    private IEnumerator move = null;
 
     private bool rayDir = false;
     private bool isTrace = false;
@@ -18,14 +18,14 @@ public class Security : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         rect = GetComponent<RectTransform>();
-        playerTr = GameObject.FindGameObjectWithTag("Player").transform;
-
-        StartCoroutine(Move());
+        move = Move();
+        StartCoroutine(move);
     }
 
     void Update()
     {
         GameOver();
+        rb.velocity = new Vector2(speed, rb.velocity.y);
     }
 
     private IEnumerator Move()
@@ -34,19 +34,17 @@ public class Security : MonoBehaviour
         while(true)
         {
             if (isTrace) break;
-            rect.DOScaleX(-1, 0);
-            rayDir = false;
-            rb.velocity = new Vector2(speed, rb.velocity.y);
+            speed = -3;
+            transform.localScale = new Vector2(1, 1);
+            yield return new WaitForSeconds(3);
+            speed = 0;
             yield return new WaitForSeconds(2);
-            rb.velocity = Vector2.zero;
+
+            speed = 3;
+            transform.localScale = new Vector2(-1, 1);
+            yield return new WaitForSeconds(3);
+            speed = 0;
             yield return new WaitForSeconds(2);
-            rect.DOScaleX(1, 0);
-            rayDir = true;
-            rb.velocity = new Vector2(-speed, rb.velocity.y);
-            yield return new WaitForSeconds(2);
-            rb.velocity = Vector2.zero;
-            yield return new WaitForSeconds(2);
-            InfiniteLoopDetector.Run();
         }
     }
 
@@ -79,41 +77,36 @@ public class Security : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player"))
+        if (collision != null && collision.CompareTag("Player"))
         {
-            isTrace = true;
-            StartCoroutine(Trace());
+            Trace(collision);
+            return;
         }
     }
 
-    private IEnumerator Trace()
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if(isTrace)
+        if (collision.CompareTag("Player"))
         {
-            // 이거 문제 있는데
+            speed = 0;
+            StartCoroutine(move);
+        }
+    }
 
-            // 플리에어 약간 추격하기
-            if((transform.position.x - playerTr.position.x) < 0)
-            {
-                transform.DOKill();
-                Debug.Log("1");
-                transform.DOLocalMoveX(40, 1).SetEase(Ease.Linear);
-                //rb.velocity = new Vector2(speed, rb.velocity.y);
-                isTrace = false;
+    private void Trace(Collider2D collision)
+    {
+        StopCoroutine(move);
+        
+        if (collision.transform.position.x < transform.position.x)
+        {
+            transform.localScale = new Vector2(1, 1);
+            speed = -3;
 
-                yield return new WaitForSeconds(1);
-                StartCoroutine(Move());
-            }
-            else if((transform.position.x - playerTr.position.x) > 0)
-            {
-                transform.DOKill();
-                Debug.Log("1");
-                transform.DOLocalMoveX(-40, 1);
-                //rb.velocity = new Vector2(-speed, rb.velocity.y);
-                isTrace = false;
-                yield return new WaitForSeconds(1);
-                StartCoroutine(Move());
-            }
+        }
+        else
+        {
+            transform.localScale = new Vector2(-1, 1);
+            speed = 3;
         }
     }
 }

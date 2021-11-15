@@ -9,11 +9,18 @@ public class GameManager : MonoSingleton<GameManager>
 
     [SerializeField] private PlayerBase playerBase = null;
 
+    public int gameMode { get; private set; }
+
     public PlayerBase PlayerBase
     {
         get
         {
             return playerBase;
         }
+    }
+
+    public void SetGameMode(int mode)
+    {
+        gameMode = mode;
     }
 }

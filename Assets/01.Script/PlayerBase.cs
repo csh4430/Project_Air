@@ -16,7 +16,6 @@ public class PlayerBase : MonoBehaviour
     [SerializeField] private float DEFAULT_WIND_RES = 0;
     [SerializeField] private float speed = 1;
     [SerializeField] private EventTrigger ET = null;
-    [SerializeField] private Vector2 windPosition;
     private Rigidbody2D playerRigid;
     private IEnumerator addPower;
     private int direction = 0;
@@ -49,6 +48,7 @@ public class PlayerBase : MonoBehaviour
     
     void Update()
     {
+        windPow = 12;
         if (isCharging)
         {
             speed = MIN_SPEED;
@@ -112,6 +112,10 @@ public class PlayerBase : MonoBehaviour
         }
 
         //Debug.Log(Mathf.Pow((110 - Vector2.Distance(transform.position, windPosition)) * 0.07f, 2) * windRes * 0.01f);
+        if (GameManager.Instance.gameMode != 1)
+        {
+            windRes = windPow = 0;
+        } 
         if(isDead)
         {
             playerRigid.velocity = Vector2.zero;

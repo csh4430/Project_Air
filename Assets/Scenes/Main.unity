@@ -464,10 +464,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 119850545}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -5.61, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1000015829}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -533,9 +532,8 @@ MonoBehaviour:
   DEFAULT_WIND_RES: 10
   speed: 5
   ET: {fileID: 896706730}
-  windPosition: {x: 100, y: 0}
   windRes: 5
-  windPow: 12
+  windPow: 10
 --- !u!1 &129236380
 GameObject:
   m_ObjectHideFlags: 0
@@ -1590,7 +1588,7 @@ ParticleSystem:
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
     donutRadius: 0.2
-    m_Position: {x: 0, y: 0, z: 0}
+    m_Position: {x: -1.5, y: 0, z: 0}
     m_Rotation: {x: 0, y: -90, z: 0}
     m_Scale: {x: 6.8, y: 0, z: 1}
     placementMode: 0
@@ -5980,7 +5978,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 10, y: 1050}
+  m_Size: {x: 50, y: 1050}
   m_EdgeRadius: 0
 --- !u!50 &573382783
 Rigidbody2D:
@@ -6118,7 +6116,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 10, y: 1050}
+  m_Size: {x: 50, y: 1050}
   m_EdgeRadius: 0
 --- !u!50 &666118559
 Rigidbody2D:
@@ -6259,7 +6257,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 10, y: 1050}
+  m_Size: {x: 50, y: 1050}
   m_EdgeRadius: 0
 --- !u!50 &683605518
 Rigidbody2D:
@@ -6397,7 +6395,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 10, y: 1050}
+  m_Size: {x: 50, y: 1050}
   m_EdgeRadius: 0
 --- !u!50 &791460345
 Rigidbody2D:
@@ -6923,53 +6921,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   light: {fileID: 913016952}
---- !u!1 &1000015828
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1000015829}
-  - component: {fileID: 1000015830}
-  m_Layer: 10
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1000015829
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000015828}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 119850547}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &1000015830
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000015828}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 1.5
 --- !u!1 &1078537652
 GameObject:
   m_ObjectHideFlags: 0
@@ -8062,7 +8013,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 10, y: 1050}
+  m_Size: {x: 50, y: 1050}
   m_EdgeRadius: 0
 --- !u!50 &1955641153
 Rigidbody2D:
