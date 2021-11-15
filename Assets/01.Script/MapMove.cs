@@ -13,6 +13,7 @@ public class MapMove : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!collision.CompareTag("Player")) return;
         if (!doEnter)
         {
             Camera.main.transform.position = new Vector3(GameManager.Instance.Xs[arr], 0, -10);

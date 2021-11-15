@@ -4,23 +4,50 @@ using UnityEngine;
 
 public class Crowd : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private RectTransform rect = null;
+    private Rigidbody2D rigid = null;
+    private float speed = 4;
+    private float enabledTime;
+    private bool isRunning = false;
+    void Awake()
     {
-        
+        rect = GetComponent<RectTransform>();
+        rigid = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
+    private void OnEnable()
+    {
+        //등장
+        speed = 4;
+        enabledTime = Time.time;
+        isRunning = false;
+        rect.transform.position = new Vector2(Camera.main.transform.position.x - Camera.main.orthographicSize * 2, rect.transform.position.y);
+    }
+
     void Update()
     {
-        
+        //이동
+        rigid.velocity = new Vector2(speed, rigid.velocity.y);
+
+        if (Time.time - enabledTime >= 5)
+        {
+            speed = 15;
+            isRunning = true;
+        }
+
+        if(rect.transform.position.x >= Camera.main.transform.position.x + Camera.main.orthographicSize * 2)
+        {
+            gameObject.SetActive(false);
+            isRunning = false;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if(collision.CompareTag("Player"))
         {
-            GameManager.Instance.PlayerBase.isCrowdExit = true;
+            if (isRunning)
+                GameManager.Instance.PlayerBase.isCrowdExit = true;
         }
     }
 }
