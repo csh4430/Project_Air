@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class School : MonoBehaviour
+public class SlippedZone : MonoBehaviour
 {
     [SerializeField]
     private Collider2D playerCol = null;
