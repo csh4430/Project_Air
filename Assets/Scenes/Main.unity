@@ -678,7 +678,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &252515842
 RectTransform:
   m_ObjectHideFlags: 0
@@ -783,7 +783,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -452.25128, y: 251.57391}
+  m_Offset: {x: 0, y: 250}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -794,7 +794,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 799.68164, y: 491.39465}
+  m_Size: {x: 100, y: 500}
   m_EdgeRadius: 0
 --- !u!1 &259441150
 GameObject:
@@ -5896,7 +5896,7 @@ GameObject:
   - component: {fileID: 573382782}
   - component: {fileID: 573382783}
   m_Layer: 5
-  m_Name: "\uBCC0\uD654\uAC00"
+  m_Name: The Main Street
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6039,7 +6039,7 @@ GameObject:
   - component: {fileID: 666118558}
   - component: {fileID: 666118559}
   m_Layer: 5
-  m_Name: "\uD53C\uC2DC\uBC29"
+  m_Name: PC room
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6177,7 +6177,7 @@ GameObject:
   - component: {fileID: 683605517}
   - component: {fileID: 683605518}
   m_Layer: 5
-  m_Name: "\uD559\uAD50"
+  m_Name: School
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6318,7 +6318,7 @@ GameObject:
   - component: {fileID: 791460344}
   - component: {fileID: 791460345}
   m_Layer: 5
-  m_Name: "\uC0B0"
+  m_Name: Mountain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7384,8 +7384,9 @@ GameObject:
   - component: {fileID: 1283631567}
   - component: {fileID: 1283631566}
   - component: {fileID: 1283631569}
+  - component: {fileID: 1283631570}
   m_Layer: 5
-  m_Name: "\uCC45\uC0C1"
+  m_Name: Desk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7495,6 +7496,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1283631570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1283631564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3930d1990e8e6f24692c5914f3f863f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1526390919
 GameObject:
   m_ObjectHideFlags: 0
@@ -7509,7 +7522,7 @@ GameObject:
   - component: {fileID: 1526390923}
   - component: {fileID: 1526390924}
   m_Layer: 5
-  m_Name: "\uD654\uC7A5\uC2E4"
+  m_Name: Washroom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7732,7 +7745,7 @@ GameObject:
   - component: {fileID: 1678940079}
   - component: {fileID: 1678940078}
   m_Layer: 5
-  m_Name: "\uC9D1"
+  m_Name: House
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7936,7 +7949,7 @@ GameObject:
   - component: {fileID: 1955641152}
   - component: {fileID: 1955641153}
   m_Layer: 5
-  m_Name: "\uBCC0\uB450\uB9AC"
+  m_Name: Suburb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

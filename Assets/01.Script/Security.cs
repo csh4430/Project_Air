@@ -68,7 +68,7 @@ public class Security : MonoBehaviour
         {
             RaycastHit2D Ray = Physics2D.Raycast(transform.position, Vector2.left, Mathf.Infinity, LayerMask.GetMask("Player"));
             Debug.DrawLine(transform.position, transform.position + Vector3.left, Color.blue);
-            if (Ray.collider != null && Ray.collider.CompareTag("Player"))
+            if (Ray.collider != null && Ray.collider.CompareTag("Player") && Ray.collider.gameObject.layer == 10)
             {
                 if (Ray.distance < .8f)
                 {
@@ -80,7 +80,7 @@ public class Security : MonoBehaviour
         {
             RaycastHit2D Ray = Physics2D.Raycast(transform.position, Vector2.right, Mathf.Infinity, LayerMask.GetMask("Player"));
             Debug.DrawLine(transform.position, transform.position + Vector3.right, Color.blue);
-            if (Ray.collider != null && Ray.collider.CompareTag("Player"))
+            if (Ray.collider != null && Ray.collider.CompareTag("Player") && Ray.collider.gameObject.layer == 10)
             {
                 if (Ray.distance < .8f)
                 {
@@ -122,23 +122,11 @@ public class Security : MonoBehaviour
         }
     }
 
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (collision != null && collision.CompareTag("Player"))
-    //    {
-    //        Trace(collision);
-    //        return;
-    //    }
-    //}
-
-    //private void OnTriggerExit2D(Collider2D collision)
-    //{
-    //    if (collision.CompareTag("Player"))
-    //    {
-    //        speed = 0;
-    //        StartCoroutine(move);
-    //    }
-    //}
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.CompareTag("Player") && collision.gameObject.layer == 10)
+            GameManager.Instance.PlayerBase.isDead = true;
+    }
 
     private void Trace(Collider2D collision)
     {
