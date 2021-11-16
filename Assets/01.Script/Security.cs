@@ -11,8 +11,10 @@ public class Security : MonoBehaviour
     private Rigidbody2D rb = null;
     private IEnumerator move = null;
 
+    private RaycastHit2D ray;
+
     private bool rayDir = false;
-    private bool isTrace = false;
+    private bool isCoroutineRunning = false;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -22,23 +24,37 @@ public class Security : MonoBehaviour
 
     void Update()
     {
+        if (rayDir)
+        {
+            ray = Physics2D.Raycast(transform.position, Vector2.left * 8, Mathf.Infinity, LayerMask.GetMask("Player"));
+            Debug.DrawLine(transform.position, transform.position + Vector3.left * 8, Color.red);
+        }
+        else if (!rayDir)
+        {
+            ray = Physics2D.Raycast(transform.position, Vector2.right * 8, Mathf.Infinity, LayerMask.GetMask("Player"));
+            Debug.DrawLine(transform.position, transform.position + Vector3.right * 8, Color.red);
+        }
+
         GameOver();
+        LightEnter();
         rb.velocity = new Vector2(speed, rb.velocity.y);
     }
 
     private IEnumerator Move()
     {
+        isCoroutineRunning = true;
         yield return new WaitForSeconds(1);
         while(true)
         {
-            if (isTrace) break;
             speed = -3;
+            rayDir = true;
             transform.localScale = new Vector2(1, 1);
             yield return new WaitForSeconds(3);
             speed = 0;
             yield return new WaitForSeconds(2);
 
             speed = 3;
+            rayDir = false;
             transform.localScale = new Vector2(-1, 1);
             yield return new WaitForSeconds(3);
             speed = 0;
@@ -73,33 +89,67 @@ public class Security : MonoBehaviour
             }
         }
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+
+    private bool BoolLightEnter()
     {
-        if (collision != null && collision.CompareTag("Player"))
+        if (ray.collider != null && ray.collider.CompareTag("Player"))
         {
-            Trace(collision);
-            return;
+            if (ray.distance < 7.8f)
+            {
+                return true;
+            }
+        }
+        else if (ray.collider == null)
+        {
+            return false;
+        }
+
+        return false;
+    }
+
+    private void LightEnter()
+    {
+        if(BoolLightEnter())
+        {
+            Trace(ray.collider);
+        }
+        else if(!BoolLightEnter())
+        {
+            if (isCoroutineRunning) return;
+            speed = 0;
+            StartCoroutine(move);
+            isCoroutineRunning = true;
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            speed = 0;
-            StartCoroutine(move);
-        }
-    }
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision != null && collision.CompareTag("Player"))
+    //    {
+    //        Trace(collision);
+    //        return;
+    //    }
+    //}
+
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if (collision.CompareTag("Player"))
+    //    {
+    //        speed = 0;
+    //        StartCoroutine(move);
+    //    }
+    //}
 
     private void Trace(Collider2D collision)
     {
         StopCoroutine(move);
-        
+        isCoroutineRunning = false;
+
+        Debug.Log("Hit");
         if (collision.transform.position.x < transform.position.x)
         {
             transform.localScale = new Vector2(1, 1);
             speed = -3;
-
         }
         else
         {
