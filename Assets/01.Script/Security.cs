@@ -9,7 +9,6 @@ public class Security : MonoBehaviour
     private float speed = 0;
 
     private Rigidbody2D rb = null;
-    private RectTransform rect = null;
     private IEnumerator move = null;
 
     private bool rayDir = false;
@@ -17,7 +16,6 @@ public class Security : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        rect = GetComponent<RectTransform>();
         move = Move();
         StartCoroutine(move);
     }
