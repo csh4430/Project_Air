@@ -15,6 +15,7 @@ public class Security : MonoBehaviour
 
     private bool rayDir = false;
     private bool isCoroutineRunning = false;
+    internal bool isSlipped = false;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -144,5 +145,18 @@ public class Security : MonoBehaviour
             transform.localScale = new Vector2(-1, 1);
             speed = 3;
         }
+    }
+
+    internal IEnumerator SlippedReaction(Collider2D collision)
+    {
+        isSlipped = true;
+        Trace(collision);
+
+        yield return new WaitForSeconds(.8f);
+
+        speed = 0;
+        StartCoroutine(move);
+        isCoroutineRunning = true;
+        isSlipped = false;
     }
 }

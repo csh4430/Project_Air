@@ -44,7 +44,6 @@ public class Traffic_Lights : MonoBehaviour
         }
     }
 
-
     private void OnTriggerExit2D(Collider2D collision)
     {
         if(!isGreen)

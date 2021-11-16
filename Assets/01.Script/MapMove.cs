@@ -21,7 +21,6 @@ public class MapMove : MonoBehaviour
             Camera.main.transform.position = new Vector3(GameManager.Instance.Xs[arr - 1], 0, -10);
 
         }
-
     }
 
     private void OnTriggerExit2D(Collider2D collision)
