@@ -5977,7 +5977,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1460, y: 0}
+  m_Offset: {x: 1457.0255, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -5988,7 +5988,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 50, y: 1050}
+  m_Size: {x: 44.051025, y: 1050}
   m_EdgeRadius: 0
 --- !u!50 &573382783
 Rigidbody2D:
@@ -6176,6 +6176,7 @@ GameObject:
   - component: {fileID: 683605515}
   - component: {fileID: 683605517}
   - component: {fileID: 683605518}
+  - component: {fileID: 683605520}
   m_Layer: 5
   m_Name: School
   m_TagString: Untagged
@@ -6257,7 +6258,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1460, y: 0}
+  m_Offset: {x: 1466.175, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -6268,7 +6269,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 50, y: 1050}
+  m_Size: {x: 37.64978, y: 1050}
   m_EdgeRadius: 0
 --- !u!50 &683605518
 Rigidbody2D:
@@ -6304,6 +6305,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arr: 3
+--- !u!114 &683605520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 683605513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ae3e5687248d4b47b2782f12abc5d69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCol: {fileID: 119850549}
 --- !u!1 &791460340
 GameObject:
   m_ObjectHideFlags: 0
@@ -7392,7 +7406,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1283631565
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7545,7 +7559,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -1091, y: 0}
+  m_AnchoredPosition: {x: 694, y: 0}
   m_SizeDelta: {x: 300, y: 500}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1526390921
@@ -7945,6 +7959,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1897076481}
   - component: {fileID: 1897076483}
+  - component: {fileID: 1897076485}
   - component: {fileID: 1897076482}
   - component: {fileID: 1897076484}
   m_Layer: 5
@@ -7997,7 +8012,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2960, y: 1050}
+  m_Size: {x: 2950, y: 1050}
   m_EdgeRadius: 0
 --- !u!222 &1897076483
 CanvasRenderer:
@@ -8016,10 +8031,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 1897076480}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39db6b61784ee56469100b3226f8666a, type: 3}
+  m_Script: {fileID: 11500000, guid: 4ae3e5687248d4b47b2782f12abc5d69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerCol: {fileID: 119850549}
+--- !u!50 &1897076485
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1897076480}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1955641148
 GameObject:
   m_ObjectHideFlags: 0

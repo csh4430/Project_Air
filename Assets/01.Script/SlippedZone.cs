@@ -37,6 +37,9 @@ public class SlippedZone : MonoBehaviour
         {
             // »ß²ýÇÒ ¶§
             Debug.Log($"{randomDelay}, »ß²ý");
+            playerCol.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            yield return new WaitForSeconds(.5f);
+            playerCol.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.one;
             StartCoroutine(security.SlippedReaction(playerCol));
         }
         isCoroutineRunning = false;
