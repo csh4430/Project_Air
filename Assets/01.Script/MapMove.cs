@@ -26,5 +26,6 @@ public class MapMove : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         doEnter = !doEnter;
+        CameraMove.Instance.isOver = false;
     }
 }

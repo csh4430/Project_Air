@@ -27,13 +27,13 @@ public class PlayerBase : MonoBehaviour
 
     private bool isJumping = false;
     private bool isCharging = false;
-    private bool isMove = false;
     private bool isHold = false;
     internal bool isDead = false;
     internal bool isCrowdExit = false;
 
     private void Awake()
     {
+
         playerRigid = GetComponent<Rigidbody2D>();
 
         addPower = AddPower();
@@ -145,7 +145,6 @@ public class PlayerBase : MonoBehaviour
 
     public void Move(int dir)
     {
-        if (isMove) return;
         direction = dir;
     }
     
