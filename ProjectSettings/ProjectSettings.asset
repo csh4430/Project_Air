@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 22
-  productGUID: 3a4dd07e6a997094f926cad17511be9c
+  productGUID: f816f55d05b8d0b468efe5a318af7626
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: DefaultCompany
-  productName: BMM_Project
+  productName: Project_Air
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -559,21 +559,7 @@ PlayerSettings:
   webGLLinkerTarget: 1
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
-  scriptingDefineSymbols:
-    1: TextMeshPro
-    4: TextMeshPro
-    7: TextMeshPro
-    13: TextMeshPro
-    14: TextMeshPro
-    19: TextMeshPro
-    21: TextMeshPro
-    25: TextMeshPro
-    27: TextMeshPro
-    28: TextMeshPro
-    29: TextMeshPro
-    30: TextMeshPro
-    32: TextMeshPro
-    33: TextMeshPro
+  scriptingDefineSymbols: {}
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}
