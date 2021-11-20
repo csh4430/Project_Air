@@ -11,12 +11,23 @@ public class Units : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        isFloating = false;
-        GameManager.Instance.CheckClear();
+        if (isPicked)
+        {
+            isFloating = false;
+            GameManager.Instance.FallUnit();
+        }
+        if (isFloating)
+        {
+            GameManager.Instance.CheckUnitInMode5();
+        }
     }
 
     public void SetPick(bool picked)
     {
         isPicked = picked;
+    }
+    public void SetFloat(bool floated)
+    {
+        isFloating = floated;
     }
 }

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class UIManager : MonoSingleton<UIManager>
 {
     [SerializeField] private List<GameObject> units = new List<GameObject>();
+    [SerializeField] private Text yearsCntText = null;
 
     public List<GameObject> Units
     { 
@@ -29,5 +30,10 @@ public class UIManager : MonoSingleton<UIManager>
         {
             un.SetActive(false);
         }
+    }
+
+    public void SetYearText(int years)
+    {
+        yearsCntText.text = years.ToString();
     }
 }

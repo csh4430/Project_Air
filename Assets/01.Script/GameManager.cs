@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class GameManager : MonoSingleton<GameManager>
 {
-    [SerializeField] private List<GameObject> units = new List<GameObject>();
     [SerializeField] private List<Units> unitList = new List<Units>();
-    private List<int> usedValX = new List<int>();
-    private List<int> usedValY = new List<int>();
-    public List<GameObject> Units { get { return units; } }
-
+    private List<Vector2> usedVector = new List<Vector2>();
+    [SerializeField] private GameObject gameOverPanel = null;
     private bool isPicked = false;
     private bool isThrew = false;
+    private bool isChecking = false;
+    private bool isCleared = false;
+    private bool isProcessing = true;
     private int pickedUnitsCnt = 0;
     private int unitHave = 0;
-    private int mode = 1;
+    private int years = 0;
+    public int mode = 1;
 
     private void Start()
     {
@@ -23,75 +24,137 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void Update()
     {
-        CheckClick();
+        if (isProcessing)
+        {
+            CheckClick();
+        }
     }
     private void SetRandomPosition()
     {
-        foreach (var un in units)
-        {
-            un.transform.position = GetRandomPosition((int)-(Camera.main.orthographicSize * Camera.main.aspect), (int)(Camera.main.orthographicSize * Camera.main.aspect), (int)-Camera.main.orthographicSize / 2, (int)Camera.main.orthographicSize / 2);
-        }
+        int horizon = (int)(Camera.main.orthographicSize * Camera.main.aspect);
+        int vertical = (int)(Camera.main.orthographicSize / 2);
+        StartCoroutine(GetRandomPosition(-horizon, horizon, -vertical, vertical));
     }
-    public Vector2 GetRandomPosition(int minX, int maxX, int minY, int maxY)
+    public IEnumerator GetRandomPosition(int minX, int maxX, int minY, int maxY)
     {
-        int valX = Random.Range(minX, maxX+1);
-        while (usedValX.Contains(valX))
+        Debug.Log(unitList.Count);
+        int valX;
+        int valY;
+        for (int i = 0; i < unitList.Count; i++)
         {
-            valX = Random.Range(minX, maxX+1);
-        }
+            do
+            {
+                yield return new WaitForEndOfFrame();
+                valX = Random.Range(minX, maxX);
+                valY = Random.Range(minY, maxY);
+            } while (usedVector.Contains(new Vector2(valX, valY)));
+            usedVector.Add(new Vector2(valX, valY));
 
-        int valY = Random.Range(minY, maxY+1);
-        while (usedValY.Contains(valY))
-        {
-            valY = Random.Range(minY, maxY+1);
+            unitList[i].transform.parent.position = new Vector2(valX, valY);
+            Debug.Log(i);
         }
-
-        Debug.Log(valX + " " + valY);
-        return new Vector2(valX * 0.8f, valY * 0.8f);
+        usedVector.Clear();
     }
 
-    public void ResetGame()
+    public void SetGame() //단계 넘어갈때
     {
+        mode++;
+        if(mode >= 6)
+        {
+            mode = 1;
+        }
         unitHave = 0;
         pickedUnitsCnt = 0;
-        foreach(var un in units)
+        isPicked = false;
+        isThrew = false;
+        SetRandomPosition();
+        ResetUnits();
+        foreach(var un in unitList)
         {
-            un.SetActive(true);
+            un.SetFloat(false);
+            un.SetPick(false);
         }
     }
 
-    public void CheckClear()
+    public void ResetGame() //초기화
+    {
+        isPicked = false;
+        isThrew = false;
+        isChecking = false;
+        isCleared = false;
+        isProcessing = true;
+        pickedUnitsCnt = 0;
+        unitHave = 0;
+        years = 0;
+        mode = 1;
+        SetRandomPosition();
+        ResetUnits(); 
+        UIManager.Instance.SetYearText(years);
+        foreach (var un in unitList)
+        {
+            un.SetFloat(false);
+            un.SetPick(false);
+        }
+    }
+
+    private void ResetUnits()
+    {
+        foreach(var un in unitList)
+        {
+            un.transform.parent.gameObject.SetActive(true);
+        }
+        UIManager.Instance.ResetList();
+    }
+
+    private void GameOver()
+    {
+        isProcessing = false;
+        ResetGame();
+        gameOverPanel.SetActive(true);
+    }
+
+    public void FallUnit()
     {
         isThrew = false;
-
-        if (mode == 3)
+        isChecking = false;
+        if (!isCleared)
         {
-            if(pickedUnitsCnt == 1 && unitHave == 4)
+            GameOver();
+        }
+        else
+        {
+            if(unitHave == 4)
+            {
+                SetGame();
+            }
+        }
+        isCleared = false;
+    }
+
+    public void CheckUnitInMode5()
+    {
+        if (mode != 5) return;
+        isThrew = false;
+        SetGame();
+    }
+
+    private void CheckUnit()
+    {
+        if(mode == 3)
+        {
+            if(unitHave == 4)
             {
                 pickedUnitsCnt = 3;
             }
         }
-
-        if (mode != pickedUnitsCnt)
+        if(pickedUnitsCnt == mode)
         {
-
-            ResetGame();
-            UIManager.Instance.ResetList();
-            return;
+            pickedUnitsCnt = 0;
+            isCleared = true;
         }
-        pickedUnitsCnt = 0;
-        if(unitHave >= 4)
+        else
         {
-            mode++;
-            isPicked = false;
-            isThrew = false;
-            SetRandomPosition();
-            ResetGame();
-            UIManager.Instance.ResetList(); 
-            foreach(var un in unitList)
-            {
-                un.SetPick(false);
-            }
+            isCleared = false;
         }
     }
 
@@ -103,41 +166,75 @@ public class GameManager : MonoSingleton<GameManager>
 
             if (hit.collider != null)
             {
-                if(!isPicked)
+                Debug.Log(hit.transform.name);
+                foreach (var un in unitList)
                 {
-                    hit.transform.position = new Vector2(0, -4);
-                    unitList[units.IndexOf(hit.collider.gameObject)].SetPick(true);
-                    isPicked = true;
-                    return;
-                }
-
-                foreach (var u in units)
-                {
-                    if (string.Compare(u.name, hit.collider.name) == 0)
+                    if(string.Compare(un.name, hit.transform.name) == 0)
                     {
-                        Units un = u.GetComponent<Units>();
-                        Rigidbody2D urb = u.GetComponent<Rigidbody2D>();
-                        if (un.isPicked)
+                        if(mode == 5)
                         {
-                            if (un.isFloating)
+                            if (isThrew)
                             {
+                                un.transform.parent.gameObject.SetActive(false);
+                                UIManager.Instance.SetYearText(++years);
+                                UIManager.Instance.GetUnits(++unitHave);
+                                if(unitHave >= 5)
+                                {
+                                    SetGame();
+                                }
                                 return;
                             }
-                            urb.AddForce(Vector2.up * 5, ForceMode2D.Impulse);
-                            un.isFloating = true;
-                            isThrew = true;
-                            return;
                         }
-                        if (isThrew)
+
+                        if (!isPicked)
                         {
-                            u.SetActive(false);
-                            pickedUnitsCnt++;
-                            UIManager.Instance.GetUnits(++unitHave);
-                            return;
+                            un.SetPick(true);
+                            isPicked = true;
+                        }
+                        else
+                        {
+                            if (un.isPicked)
+                            {
+                                if (!isThrew)
+                                {
+                                    isThrew = true;
+                                    un.SetFloat(true);
+                                    un.GetComponent<Rigidbody2D>().AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                                }
+                                else
+                                {
+                                    if (!isChecking)
+                                    {
+                                        isChecking = true;
+                                        CheckUnit();
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (isThrew && !isChecking)
+                                {
+                                    un.transform.parent.gameObject.SetActive(false);
+                                    pickedUnitsCnt++;
+                                    UIManager.Instance.GetUnits(++unitHave);
+                                }
+                            }
                         }
                     }
                 }
             }
+        }
+    }
+
+    public void BounceAll()
+    {
+        if (mode != 5) return;
+        if (isThrew) return; 
+        isThrew = true;
+        foreach (var un in unitList)
+        {
+            un.GetComponent<Rigidbody2D>().AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+            un.SetFloat(true);
         }
     }
 }
