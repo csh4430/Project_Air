@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class GameManager : MonoSingleton<GameManager>
 {
@@ -200,6 +201,8 @@ public class GameManager : MonoSingleton<GameManager>
                                     isThrew = true;
                                     un.SetFloat(true);
                                     un.GetComponent<Rigidbody2D>().AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                                    Debug.Log("Tlqkf");
+                                    un.transform.DOLocalRotate(new Vector3(0, 0, 180), 2, RotateMode.Fast).OnComplete(() => un.transform.DOLocalRotate(new Vector3(0, 0, 0), 0));
                                 }
                                 else
                                 {
@@ -234,6 +237,7 @@ public class GameManager : MonoSingleton<GameManager>
         foreach (var un in unitList)
         {
             un.GetComponent<Rigidbody2D>().AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+            un.transform.DOLocalRotate(new Vector3(0, 0, 180), 2, RotateMode.Fast).OnComplete(() => un.transform.DOLocalRotate(new Vector3(0, 0, 0), 0));
             un.SetFloat(true);
         }
     }
