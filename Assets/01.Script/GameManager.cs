@@ -61,16 +61,16 @@ public class GameManager : MonoSingleton<GameManager>
 
         for(int i = 0; i < unitList.Count; i++)
         {
-            unitList[i].transform.DOMove(new Vector2(0, -6), 1).From();
+            unitList[i].transform.parent.DOMove(new Vector2(0, -6), 1).From();
         }
         usedVector.Clear();
     }
 
-    private void SetAllUnit(bool isON)
+    public void SetAllUnit(bool isON)
     {
         foreach (var un in unitList)
         {
-            un.gameObject.SetActive(isON);
+            un.transform.parent.gameObject.SetActive(isON);
         }
     }
 
