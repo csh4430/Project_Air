@@ -56,8 +56,13 @@ public class GameManager : MonoSingleton<GameManager>
             unitList[i].transform.parent.position = new Vector2(valX, valY);
             Debug.Log(i);
         }
+
         SetAllUnit(true);
 
+        for(int i = 0; i < unitList.Count; i++)
+        {
+            unitList[i].transform.DOMove(new Vector2(0, -6), 1).From();
+        }
         usedVector.Clear();
     }
 
