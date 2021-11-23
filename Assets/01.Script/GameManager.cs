@@ -128,7 +128,6 @@ public class GameManager : MonoSingleton<GameManager>
         isProcessing = false;
         gameOverPanel.SetActive(true);
         gameOverPanel.transform.DOMove(new Vector2(0, -6), .5f).From();
-        //gameOverPanel.transform.DOScale(Vector2.zero, .5f).From();
         TimeManager.Instance.SetTimer(0, 1);
         TimeManager.Instance.SetTimer(-1);
     }
@@ -137,7 +136,6 @@ public class GameManager : MonoSingleton<GameManager>
     {
         gameStartPanel.SetActive(true);
         gameStartPanel.transform.DOMove(new Vector2(0, -6), .5f).From();
-        //gameStartPanel.transform.DOScale(Vector2.zero, .5f).From();
     }
 
     public void FallUnit()
@@ -235,6 +233,7 @@ public class GameManager : MonoSingleton<GameManager>
                                 }
                                 else
                                 {
+                                    un.transform.position = new Vector3(un.transform.position.x, un.transform.position.y, -1);
                                     if (!isChecking)
                                     {
                                         isChecking = true;
@@ -244,6 +243,7 @@ public class GameManager : MonoSingleton<GameManager>
                             }
                             else
                             {
+
                                 if (isThrew && !isChecking)
                                 {
                                     TimeManager.Instance.SetTimer(0, stageHad * 0.05f + 3);

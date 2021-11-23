@@ -30,6 +30,7 @@ public class UIManager : MonoSingleton<UIManager>
         foreach(var un in units)
         {
             un.SetActive(false);
+            un.transform.position = new Vector3(un.transform.position.x, un.transform.position.y, -1);
         }
     }
 
