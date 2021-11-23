@@ -11,6 +11,7 @@ public class Units : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        collision.transform.position = new Vector3(collision.transform.position.x, collision.transform.position.y, -1);
         if (isPicked)
         {
             isFloating = false;

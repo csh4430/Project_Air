@@ -8,6 +8,7 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField] private List<Units> unitList = new List<Units>();
     private List<Vector2> usedVector = new List<Vector2>();
     [SerializeField] private GameObject gameOverPanel = null;
+    [SerializeField] private GameObject gameStartPanel = null;
     private bool isPicked = false;
     private bool isThrew = false;
     private bool isChecking = false;
@@ -57,12 +58,13 @@ public class GameManager : MonoSingleton<GameManager>
             Debug.Log(i);
         }
 
-        SetAllUnit(true);
 
         for(int i = 0; i < unitList.Count; i++)
         {
-            unitList[i].transform.parent.DOMove(new Vector2(0, -6), 1).From();
+            unitList[i].transform.parent.DOMove(new Vector2(4, 0), 1).From();
         }
+
+        SetAllUnit(true);
         usedVector.Clear();
     }
 
@@ -87,7 +89,7 @@ public class GameManager : MonoSingleton<GameManager>
         isPicked = false;
         isThrew = false;
         SetRandomPosition();
-        ResetUnits();
+        UIManager.Instance.ResetList();
         TimeManager.Instance.SetTimer(1);
         TimeManager.Instance.SetTimer(0, stageHad * 0.05f + 3);
         foreach(var un in unitList)
@@ -110,7 +112,7 @@ public class GameManager : MonoSingleton<GameManager>
         years = 0;
         mode = 1;
         SetRandomPosition();
-        ResetUnits();
+        UIManager.Instance.ResetList();
         TimeManager.Instance.SetTimer(0);
         TimeManager.Instance.SetTimer(1);
         UIManager.Instance.SetYearText(years);
@@ -121,21 +123,21 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
-    private void ResetUnits()
-    {
-        foreach(var un in unitList)
-        {
-            un.transform.parent.gameObject.SetActive(true);
-        }
-        UIManager.Instance.ResetList();
-    }
-
     private void GameOver()
     {
         isProcessing = false;
         gameOverPanel.SetActive(true);
+        gameOverPanel.transform.DOMove(new Vector2(0, -6), .5f).From();
+        //gameOverPanel.transform.DOScale(Vector2.zero, .5f).From();
         TimeManager.Instance.SetTimer(0, 1);
         TimeManager.Instance.SetTimer(-1);
+    }
+
+    public void Home()
+    {
+        gameStartPanel.SetActive(true);
+        gameStartPanel.transform.DOMove(new Vector2(0, -6), .5f).From();
+        //gameStartPanel.transform.DOScale(Vector2.zero, .5f).From();
     }
 
     public void FallUnit()
@@ -229,7 +231,7 @@ public class GameManager : MonoSingleton<GameManager>
                                     isThrew = true;
                                     un.SetFloat(true);
                                     un.GetComponent<Rigidbody2D>().AddForce(Vector2.up * 10, ForceMode2D.Impulse);
-                                    //un.transform.DOLocalRotate(new Vector3(0, 0, 180), 2, RotateMode.Fast).OnComplete(() => un.transform.DOLocalRotate(new Vector3(0, 0, 0), 0));
+                                    un.transform.position = new Vector3(un.transform.position.x, un.transform.position.y, -2);
                                 }
                                 else
                                 {
@@ -266,7 +268,6 @@ public class GameManager : MonoSingleton<GameManager>
         foreach (var un in unitList)
         {
             un.GetComponent<Rigidbody2D>().AddForce(Vector2.up * 10, ForceMode2D.Impulse);
-            //un.transform.DOLocalRotate(new Vector3(0, 0, 180), 2, RotateMode.Fast).OnComplete(() => un.transform.DOLocalRotate(new Vector3(0, 0, 0), 0));
             un.SetFloat(true);
         }
     }
