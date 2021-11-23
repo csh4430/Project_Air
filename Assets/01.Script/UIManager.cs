@@ -7,6 +7,7 @@ public class UIManager : MonoSingleton<UIManager>
 {
     [SerializeField] private List<GameObject> units = new List<GameObject>();
     [SerializeField] private Text yearsCntText = null;
+    [SerializeField] private Slider timeLimitSlider = null;
 
     public List<GameObject> Units
     { 
@@ -35,5 +36,10 @@ public class UIManager : MonoSingleton<UIManager>
     public void SetYearText(int years)
     {
         yearsCntText.text = years.ToString();
+    }
+
+    public void SetSliderValue(float val)
+    {
+        timeLimitSlider.value = val;
     }
 }

@@ -13,14 +13,15 @@ public class GameManager : MonoSingleton<GameManager>
     private bool isChecking = false;
     private bool isCleared = false;
     private bool isProcessing = true;
+    private int stageHad = 0;
     private int pickedUnitsCnt = 0;
     private int unitHave = 0;
     private int years = 0;
-    public int mode = 1;
+    public int mode = 0;
 
     private void Start()
     {
-        SetRandomPosition();
+        SetGame();
     }
 
     private void Update()
@@ -28,6 +29,10 @@ public class GameManager : MonoSingleton<GameManager>
         if (isProcessing)
         {
             CheckClick();
+        }
+        if (TimeManager.Instance.CheckTimer())
+        {
+            GameOver();
         }
     }
     private void SetRandomPosition()
@@ -41,6 +46,7 @@ public class GameManager : MonoSingleton<GameManager>
         Debug.Log(unitList.Count);
         int valX;
         int valY;
+        SetAllUnit(false);
         for (int i = 0; i < unitList.Count; i++)
         {
             do
@@ -54,12 +60,23 @@ public class GameManager : MonoSingleton<GameManager>
             unitList[i].transform.parent.position = new Vector2(valX, valY);
             Debug.Log(i);
         }
+        SetAllUnit(true);
+
         usedVector.Clear();
+    }
+
+    private void SetAllUnit(bool isON)
+    {
+        foreach (var un in unitList)
+        {
+            un.gameObject.SetActive(isON);
+        }
     }
 
     public void SetGame() //단계 넘어갈때
     {
         mode++;
+        stageHad++;
         if(mode >= 6)
         {
             mode = 1;
@@ -70,6 +87,8 @@ public class GameManager : MonoSingleton<GameManager>
         isThrew = false;
         SetRandomPosition();
         ResetUnits();
+        TimeManager.Instance.SetTimer(1);
+        TimeManager.Instance.SetTimer(0, stageHad * 0.05f + 3);
         foreach(var un in unitList)
         {
             un.SetFloat(false);
@@ -84,12 +103,15 @@ public class GameManager : MonoSingleton<GameManager>
         isChecking = false;
         isCleared = false;
         isProcessing = true;
+        stageHad = 0;
         pickedUnitsCnt = 0;
         unitHave = 0;
         years = 0;
         mode = 1;
         SetRandomPosition();
-        ResetUnits(); 
+        ResetUnits();
+        TimeManager.Instance.SetTimer(0);
+        TimeManager.Instance.SetTimer(1);
         UIManager.Instance.SetYearText(years);
         foreach (var un in unitList)
         {
@@ -110,8 +132,9 @@ public class GameManager : MonoSingleton<GameManager>
     private void GameOver()
     {
         isProcessing = false;
-        ResetGame();
         gameOverPanel.SetActive(true);
+        TimeManager.Instance.SetTimer(0, 1);
+        TimeManager.Instance.SetTimer(-1);
     }
 
     public void FallUnit()
@@ -176,6 +199,8 @@ public class GameManager : MonoSingleton<GameManager>
                         {
                             if (isThrew)
                             {
+                                TimeManager.Instance.SetTimer(0, stageHad * 0.05f + 3);
+
                                 un.transform.parent.gameObject.SetActive(false);
                                 UIManager.Instance.SetYearText(++years);
                                 UIManager.Instance.GetUnits(++unitHave);
@@ -198,11 +223,12 @@ public class GameManager : MonoSingleton<GameManager>
                             {
                                 if (!isThrew)
                                 {
+                                    TimeManager.Instance.SetTimer(0, stageHad * 0.05f + 3);
+
                                     isThrew = true;
                                     un.SetFloat(true);
                                     un.GetComponent<Rigidbody2D>().AddForce(Vector2.up * 10, ForceMode2D.Impulse);
-                                    Debug.Log("Tlqkf");
-                                    un.transform.DOLocalRotate(new Vector3(0, 0, 180), 2, RotateMode.Fast).OnComplete(() => un.transform.DOLocalRotate(new Vector3(0, 0, 0), 0));
+                                    //un.transform.DOLocalRotate(new Vector3(0, 0, 180), 2, RotateMode.Fast).OnComplete(() => un.transform.DOLocalRotate(new Vector3(0, 0, 0), 0));
                                 }
                                 else
                                 {
@@ -217,6 +243,8 @@ public class GameManager : MonoSingleton<GameManager>
                             {
                                 if (isThrew && !isChecking)
                                 {
+                                    TimeManager.Instance.SetTimer(0, stageHad * 0.05f + 3);
+
                                     un.transform.parent.gameObject.SetActive(false);
                                     pickedUnitsCnt++;
                                     UIManager.Instance.GetUnits(++unitHave);
@@ -237,7 +265,7 @@ public class GameManager : MonoSingleton<GameManager>
         foreach (var un in unitList)
         {
             un.GetComponent<Rigidbody2D>().AddForce(Vector2.up * 10, ForceMode2D.Impulse);
-            un.transform.DOLocalRotate(new Vector3(0, 0, 180), 2, RotateMode.Fast).OnComplete(() => un.transform.DOLocalRotate(new Vector3(0, 0, 0), 0));
+            //un.transform.DOLocalRotate(new Vector3(0, 0, 180), 2, RotateMode.Fast).OnComplete(() => un.transform.DOLocalRotate(new Vector3(0, 0, 0), 0));
             un.SetFloat(true);
         }
     }
