@@ -19,11 +19,6 @@ public class GameManager : MonoSingleton<GameManager>
     private int years = 0;
     public int mode = 0;
 
-    private void Start()
-    {
-        SetGame();
-    }
-
     private void Update()
     {
         if (isProcessing)
@@ -35,6 +30,7 @@ public class GameManager : MonoSingleton<GameManager>
             GameOver();
         }
     }
+
     private void SetRandomPosition()
     {
         int horizon = (int)(Camera.main.orthographicSize * Camera.main.aspect);
