@@ -15,6 +15,7 @@ public class Units : MonoBehaviour
         {
             isFloating = false;
             GameManager.Instance.FallUnit();
+            transform.position = new Vector3(transform.position.x, transform.position.y, -1);
         }
         if (isFloating)
         {

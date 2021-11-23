@@ -233,7 +233,6 @@ public class GameManager : MonoSingleton<GameManager>
                                 }
                                 else
                                 {
-                                    un.transform.position = new Vector3(un.transform.position.x, un.transform.position.y, -1);
                                     if (!isChecking)
                                     {
                                         isChecking = true;
