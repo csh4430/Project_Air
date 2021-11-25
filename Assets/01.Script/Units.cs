@@ -8,6 +8,13 @@ public class Units : MonoBehaviour
     public bool isPicked;
     public bool isFloating;
 
+    private void Update()
+    {
+        if (isPicked)
+            gameObject.GetComponent<SpriteRenderer>().material.SetColor("_MainTex", Color.yellow);
+        else
+            gameObject.GetComponent<SpriteRenderer>().material.SetColor("_MainTex", Color.clear);
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -15,6 +22,7 @@ public class Units : MonoBehaviour
         {
             isFloating = false;
             GameManager.Instance.FallUnit();
+            GetComponent<SpriteRenderer>().color = Color.white;
             transform.position = new Vector3(transform.position.x, transform.position.y, -1);
         }
         if (isFloating)

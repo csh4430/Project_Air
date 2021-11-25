@@ -9,6 +9,8 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField] private Text yearsCntText = null;
     [SerializeField] private Slider timeLimitSlider = null;
 
+    
+
     public List<GameObject> Units
     { 
         get
@@ -17,12 +19,10 @@ public class UIManager : MonoSingleton<UIManager>
         }
     }
 
-    public void GetUnits(int cnt)
+    public void GetUnits(int num, int cnt)
     {
-        for (int a = 0; a < cnt; a++)
-        {
-            units[a].SetActive(true);
-        }
+        units[num].transform.SetSiblingIndex(cnt);
+        units[num].SetActive(true);
     }
 
     public void ResetList()
@@ -30,7 +30,6 @@ public class UIManager : MonoSingleton<UIManager>
         foreach(var un in units)
         {
             un.SetActive(false);
-            un.transform.position = new Vector3(un.transform.position.x, un.transform.position.y, -1);
         }
     }
 

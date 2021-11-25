@@ -6,6 +6,7 @@ using DG.Tweening;
 public class GameManager : MonoSingleton<GameManager>
 {
     [SerializeField] private List<Units> unitList = new List<Units>();
+    public List<Units> Units { get { return unitList; } }
     private List<Vector2> usedVector = new List<Vector2>();
     [SerializeField] private GameObject gameOverPanel = null;
     [SerializeField] private GameObject gameStartPanel = null;
@@ -118,6 +119,7 @@ public class GameManager : MonoSingleton<GameManager>
         UIManager.Instance.SetYearText(years);
         foreach (var un in unitList)
         {
+            un.transform.position = new Vector3(un.transform.position.x, un.transform.position.y, -1);
             un.SetFloat(false);
             un.SetPick(false);
         }
@@ -125,9 +127,11 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void GameOver()
     {
+        mode = 0;   
         isProcessing = false;
         gameOverPanel.SetActive(true);
         gameOverPanel.transform.DOMove(new Vector2(0, -6), .5f).From();
+        SetAllUnit(false);
         TimeManager.Instance.SetTimer(0, 1);
         TimeManager.Instance.SetTimer(-1);
     }
@@ -189,6 +193,8 @@ public class GameManager : MonoSingleton<GameManager>
         {
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
 
+            if (isProcessing == false) return;
+
             if (hit.collider != null)
             {
                 Debug.Log(hit.transform.name);
@@ -204,7 +210,7 @@ public class GameManager : MonoSingleton<GameManager>
 
                                 un.transform.parent.gameObject.SetActive(false);
                                 UIManager.Instance.SetYearText(++years);
-                                UIManager.Instance.GetUnits(++unitHave);
+                                UIManager.Instance.GetUnits(unitList.IndexOf(un), ++unitHave);
                                 if(unitHave >= 5)
                                 {
                                     SetGame();
@@ -236,6 +242,7 @@ public class GameManager : MonoSingleton<GameManager>
                                     if (!isChecking)
                                     {
                                         isChecking = true;
+                                        un.GetComponent<SpriteRenderer>().color = Color.white * 0.5f;
                                         CheckUnit();
                                     }
                                 }
@@ -249,7 +256,7 @@ public class GameManager : MonoSingleton<GameManager>
 
                                     un.transform.parent.gameObject.SetActive(false);
                                     pickedUnitsCnt++;
-                                    UIManager.Instance.GetUnits(++unitHave);
+                                    UIManager.Instance.GetUnits(unitList.IndexOf(un), ++unitHave);
                                 }
                             }
                         }
