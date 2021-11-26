@@ -10,6 +10,8 @@ public class GameManager : MonoSingleton<GameManager>
     private List<Vector2> usedVector = new List<Vector2>();
     [SerializeField] private GameObject gameOverPanel = null;
     [SerializeField] private GameObject gameStartPanel = null;
+
+    private Save save = null;
     private bool isPicked = false;
     private bool isThrew = false;
     private bool isChecking = false;
@@ -19,6 +21,7 @@ public class GameManager : MonoSingleton<GameManager>
     private int pickedUnitsCnt = 0;
     private int unitHave = 0;
     private int years = 0;
+    private int highestYears = 0;
     public int mode = 0;
 
     private void Update()
@@ -83,6 +86,7 @@ public class GameManager : MonoSingleton<GameManager>
     public void SetGame() //단계 넘어갈때
     {
         if (!isProcessing) return;
+        save = FileManager.Instance.LoadFromJson();
         mode++;
         stageHad++;
         if(mode >= 6)
@@ -136,6 +140,7 @@ public class GameManager : MonoSingleton<GameManager>
         isProcessing = false;
         gameOverPanel.SetActive(true);
         gameOverPanel.transform.DOMove(new Vector2(0, -6), .5f).From();
+        FileManager.Instance.SaveToJson();
         UIManager.Instance._UICANVAS.SetActive(false);
         TimeManager.Instance.SetTimer(0, 1);
         TimeManager.Instance.SetTimer(-1);
@@ -217,6 +222,10 @@ public class GameManager : MonoSingleton<GameManager>
 
                                 un.transform.parent.gameObject.SetActive(false);
                                 UIManager.Instance.SetYearText(++years);
+                                if(years > highestYears)
+                                {
+                                    highestYears = years;
+                                }
                                 UIManager.Instance.GetUnits(unitList.IndexOf(un), ++unitHave);
                                 if(unitHave >= 5)
                                 {
