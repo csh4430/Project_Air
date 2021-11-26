@@ -8,8 +8,8 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField] private List<GameObject> units = new List<GameObject>();
     [SerializeField] private Text yearsCntText = null;
     [SerializeField] private Slider timeLimitSlider = null;
-
-    
+    [SerializeField] private GameObject uiCanvasObject = null;
+    public GameObject _UICANVAS { get { return uiCanvasObject; } }
 
     public List<GameObject> Units
     { 

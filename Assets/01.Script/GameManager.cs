@@ -39,6 +39,7 @@ public class GameManager : MonoSingleton<GameManager>
         int vertical = (int)(Camera.main.orthographicSize / 2);
         StartCoroutine(GetRandomPosition(-horizon, horizon, -vertical, vertical));
     }
+
     public IEnumerator GetRandomPosition(int minX, int maxX, int minY, int maxY)
     {
         Debug.Log(unitList.Count);
@@ -52,10 +53,10 @@ public class GameManager : MonoSingleton<GameManager>
                 yield return new WaitForEndOfFrame();
                 valX = Random.Range(minX, maxX);
                 valY = Random.Range(minY, maxY);
-            } while (usedVector.Contains(new Vector2(valX, valY)));
+            } while (usedVector.Contains(new Vector3(valX, valY, valY)));
             usedVector.Add(new Vector2(valX, valY));
 
-            unitList[i].transform.parent.position = new Vector2(valX, valY);
+            unitList[i].transform.parent.position = new Vector3(valX, valY, valY);
             Debug.Log(i);
         }
 
@@ -74,11 +75,14 @@ public class GameManager : MonoSingleton<GameManager>
         foreach (var un in unitList)
         {
             un.transform.parent.gameObject.SetActive(isON);
+            un.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            un.GetComponent<Rigidbody2D>().AddForce(Vector2.up * Random.Range(1f, 5), ForceMode2D.Impulse);
         }
     }
 
     public void SetGame() //단계 넘어갈때
     {
+        if (!isProcessing) return;
         mode++;
         stageHad++;
         if(mode >= 6)
@@ -127,11 +131,12 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void GameOver()
     {
+        SetAllUnit(false);
         mode = 0;   
         isProcessing = false;
         gameOverPanel.SetActive(true);
         gameOverPanel.transform.DOMove(new Vector2(0, -6), .5f).From();
-        SetAllUnit(false);
+        UIManager.Instance._UICANVAS.SetActive(false);
         TimeManager.Instance.SetTimer(0, 1);
         TimeManager.Instance.SetTimer(-1);
     }
@@ -144,6 +149,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void FallUnit()
     {
+        if (!isProcessing) return;
         isThrew = false;
         isChecking = false;
         if (!isCleared)
@@ -162,6 +168,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void CheckUnitInMode5()
     {
+        if (!isProcessing) return;
         if (mode != 5) return;
         isThrew = false;
         SetGame();
@@ -213,6 +220,7 @@ public class GameManager : MonoSingleton<GameManager>
                                 UIManager.Instance.GetUnits(unitList.IndexOf(un), ++unitHave);
                                 if(unitHave >= 5)
                                 {
+                                    if (!isProcessing) return;
                                     SetGame();
                                 }
                                 return;
