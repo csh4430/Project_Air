@@ -32,12 +32,12 @@ public class Units : MonoBehaviour
             isFloating = false;
             GameManager.Instance.FallUnit();
             GetComponent<SpriteRenderer>().color = Color.white;
-            transform.position = new Vector3(transform.position.x, transform.position.y, -1);
         }
         if (isFloating)
         {
             GameManager.Instance.SetGame();
         }
+        transform.position = new Vector3(transform.position.x, transform.position.y, -1);
     }
 
     public void SetPick(bool picked)
