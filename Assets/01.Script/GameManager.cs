@@ -11,7 +11,6 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField] private GameObject gameOverPanel = null;
     [SerializeField] private GameObject gameStartPanel = null;
 
-    private Save save = null;
     private bool isPicked = false;
     private bool isThrew = false;
     private bool isChecking = false;
@@ -21,8 +20,12 @@ public class GameManager : MonoSingleton<GameManager>
     private int pickedUnitsCnt = 0;
     private int unitHave = 0;
     private int years = 0;
-    private int highestYears = 0;
     public int mode = 0;
+
+    private void Start()
+    {
+        UIManager.Instance.SetHighestYearText(FileManager.Instance.save.highestYear);
+    }
 
     private void Update()
     {
@@ -36,6 +39,14 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
+    private void QuitGame()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+    }
+
     private void SetRandomPosition()
     {
         int horizon = (int)(Camera.main.orthographicSize * Camera.main.aspect);
@@ -45,10 +56,10 @@ public class GameManager : MonoSingleton<GameManager>
 
     public IEnumerator GetRandomPosition(int minX, int maxX, int minY, int maxY)
     {
+        SetAllUnit(false);
         Debug.Log(unitList.Count);
         int valX;
         int valY;
-        SetAllUnit(false);
         for (int i = 0; i < unitList.Count; i++)
         {
             do
@@ -62,14 +73,13 @@ public class GameManager : MonoSingleton<GameManager>
             unitList[i].transform.parent.position = new Vector3(valX, valY, valY);
             Debug.Log(i);
         }
-
+        SetAllUnit(true);
 
         for(int i = 0; i < unitList.Count; i++)
         {
             unitList[i].transform.parent.DOMove(new Vector2(4, 0), 1).From();
         }
 
-        SetAllUnit(true);
         usedVector.Clear();
     }
 
@@ -86,9 +96,8 @@ public class GameManager : MonoSingleton<GameManager>
     public void SetGame() //단계 넘어갈때
     {
         if (!isProcessing) return;
-        save = FileManager.Instance.LoadFromJson();
-        mode++;
         stageHad++;
+        mode++;
         if(mode >= 6)
         {
             mode = 1;
@@ -148,6 +157,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void Home()
     {
+        isProcessing = true;
         gameStartPanel.SetActive(true);
         gameStartPanel.transform.DOMove(new Vector2(0, -6), .5f).From();
     }
@@ -169,14 +179,6 @@ public class GameManager : MonoSingleton<GameManager>
             }
         }
         isCleared = false;
-    }
-
-    public void CheckUnitInMode5()
-    {
-        if (!isProcessing) return;
-        if (mode != 5) return;
-        isThrew = false;
-        SetGame();
     }
 
     private void CheckUnit()
@@ -222,9 +224,11 @@ public class GameManager : MonoSingleton<GameManager>
 
                                 un.transform.parent.gameObject.SetActive(false);
                                 UIManager.Instance.SetYearText(++years);
-                                if(years > highestYears)
+                                if(years > FileManager.Instance.save.highestYear)
                                 {
-                                    highestYears = years;
+                                    FileManager.Instance.save.highestYear = years;
+                                    Debug.Log(FileManager.Instance.save.highestYear);
+                                    UIManager.Instance.SetHighestYearText(FileManager.Instance.save.highestYear);
                                 }
                                 UIManager.Instance.GetUnits(unitList.IndexOf(un), ++unitHave);
                                 if(unitHave >= 5)
@@ -251,8 +255,6 @@ public class GameManager : MonoSingleton<GameManager>
 
                                     isThrew = true;
                                     un.SetFloat(true);
-                                    un.GetComponent<Rigidbody2D>().AddForce(Vector2.up * 10, ForceMode2D.Impulse);
-                                    un.transform.position = new Vector3(un.transform.position.x, un.transform.position.y, -2);
                                 }
                                 else
                                 {
@@ -290,7 +292,6 @@ public class GameManager : MonoSingleton<GameManager>
         isThrew = true;
         foreach (var un in unitList)
         {
-            un.GetComponent<Rigidbody2D>().AddForce(Vector2.up * 10, ForceMode2D.Impulse);
             un.SetFloat(true);
         }
     }

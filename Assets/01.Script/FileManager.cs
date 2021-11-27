@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class FileManager : MonoSingleton<FileManager>
 {
-    [SerializeField] private Save save = null;
-    public Save CurrentSave { get { return save; } }
+    public Save save = null;
     private string SAVE_PATH = "";
     private readonly string SAVE_FILING = "/SaveFile.txt";
     private void Awake()

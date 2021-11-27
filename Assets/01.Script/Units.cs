@@ -8,6 +8,14 @@ public class Units : MonoBehaviour
     public bool isPicked;
     public bool isFloating;
 
+    private Animator unitAni = null;
+    private Rigidbody2D unitRigid = null;
+
+    private void Awake()
+    {
+        unitAni = GetComponent<Animator>();
+        unitRigid = GetComponent<Rigidbody2D>();
+    }
     private void Update()
     {
         if (isPicked)
@@ -18,6 +26,7 @@ public class Units : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        unitAni.SetBool("isFloat", false);
         if (isPicked)
         {
             isFloating = false;
@@ -27,7 +36,7 @@ public class Units : MonoBehaviour
         }
         if (isFloating)
         {
-            GameManager.Instance.CheckUnitInMode5();
+            GameManager.Instance.SetGame();
         }
     }
 
@@ -38,5 +47,11 @@ public class Units : MonoBehaviour
     public void SetFloat(bool floated)
     {
         isFloating = floated;
+        if (isFloating)
+        {
+            unitAni.SetBool("isFloat", true);
+            unitRigid.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+            transform.position = new Vector3(transform.position.x,transform.position.y, -2);
+        }
     }
 }
