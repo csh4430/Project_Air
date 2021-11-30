@@ -38,7 +38,7 @@ public class GameManager : MonoSingleton<GameManager>
             GameOver();
         }
 
-        QuitGame();
+        //QuitGame();
     }
 
     private void QuitGame()
