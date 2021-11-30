@@ -15,14 +15,13 @@ public class GameManager : MonoSingleton<GameManager>
     private bool isThrew = false;
     private bool isChecking = false;
     private bool isCleared = false;
+    private bool isSpread = false;
     public bool isProcessing { get; private set; }
     private int stageHad = 0;
     private int pickedUnitsCnt = 0;
     private int unitHave = 0;
     private int years = 0;
     public int mode = 0;
-
-    object _lock = new object();
 
     private void Awake()
     {
@@ -96,6 +95,7 @@ public class GameManager : MonoSingleton<GameManager>
             });
         }
 
+        isSpread = true;
         usedVector.Clear();
     }
 
@@ -112,33 +112,32 @@ public class GameManager : MonoSingleton<GameManager>
     public void SetGame() //단계 넘어갈때
     {
         if (!isProcessing) return;
-        lock (_lock)
+        isSpread = false;
+        SetAllUnit(false);
+        stageHad++;
+        mode++;
+        if (mode >= 6)
         {
-            SetAllUnit(false);
-            stageHad++;
-            mode++;
-            if (mode >= 6)
-            {
-                mode = 1;
-            }
-            unitHave = 0;
-            pickedUnitsCnt = 0;
-            isPicked = false;
-            isThrew = false;
-            SetRandomPosition();
-            UIManager.Instance.ResetList();
-            TimeManager.Instance.SetTimer(1);
-            TimeManager.Instance.SetTimer(0, stageHad * 0.05f + 3);
-            foreach (var un in unitList)
-            {
-                un.SetFloat(false);
-                un.SetPick(false);
-            }
+            mode = 1;
+        }
+        unitHave = 0;
+        pickedUnitsCnt = 0;
+        isPicked = false;
+        isThrew = false;
+        SetRandomPosition();
+        UIManager.Instance.ResetList();
+        TimeManager.Instance.SetTimer(1);
+        TimeManager.Instance.SetTimer(0, stageHad * 0.05f + 3);
+        foreach (var un in unitList)
+        {
+            un.SetFloat(false);
+            un.SetPick(false);
         }
     }
 
     public void ResetGame() //초기화
     {
+        isSpread = false;
         isPicked = false;
         isThrew = false;
         isChecking = false;
@@ -164,18 +163,15 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void GameOver()
     {
-        lock (_lock)
-        {
-            isProcessing = false;
-            SetAllUnit(false);
-            mode = 0;
-            gameOverPanel.SetActive(true);
-            gameOverPanel.transform.DOMove(new Vector2(0, -6), .5f).From();
-            FileManager.Instance.SaveToJson();
-            UIManager.Instance._UICANVAS.SetActive(false);
-            TimeManager.Instance.SetTimer(0, 1);
-            TimeManager.Instance.SetTimer(-1);
-        }
+        isProcessing = false;
+        SetAllUnit(false);
+        mode = 0;
+        gameOverPanel.SetActive(true);
+        gameOverPanel.transform.DOMove(new Vector2(0, -6), .5f).From();
+        FileManager.Instance.SaveToJson();
+        UIManager.Instance._UICANVAS.SetActive(false);
+        TimeManager.Instance.SetTimer(0, 1);
+        TimeManager.Instance.SetTimer(-1);
     }
 
     public void Home()
@@ -187,6 +183,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void FallUnit()
     {
+        if (!isSpread) return;
         if (!isProcessing) return;
         isThrew = false;
         isChecking = false;
