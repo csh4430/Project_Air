@@ -10,7 +10,7 @@ public class TimeManager : MonoSingleton<TimeManager>
 
     void Update()
     {
-        if(timeMove)
+        if(timeMove && GameManager.Instance.isProcessing)
             UIManager.Instance.SetSliderValue(diffTime -= Time.deltaTime / sec);
     }
 

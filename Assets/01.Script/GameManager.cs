@@ -15,18 +15,21 @@ public class GameManager : MonoSingleton<GameManager>
     private bool isThrew = false;
     private bool isChecking = false;
     private bool isCleared = false;
-    private bool isProcessing = true;
+    public bool isProcessing { get; private set; }
     private int stageHad = 0;
     private int pickedUnitsCnt = 0;
     private int unitHave = 0;
     private int years = 0;
     public int mode = 0;
 
+    object _lock = new object();
+
+    private void Awake()
+    {
+        isProcessing = true;
+    }
     private void Start()
     {
-        //if (!FileManager.Instance.save.hadTutorial)
-        //    DoTutorial();
-
         UIManager.Instance.SetHighestYearText(FileManager.Instance.save.highestYear);
     }
 
@@ -44,10 +47,16 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void DoTutorial()
     {
+        isProcessing = false;
         FileManager.Instance.save.hadTutorial = true;
         FileManager.Instance.SaveToJson();
-        Time.timeScale = 0;
+        UIManager.Instance.SetMaskActive(true);
+    }
 
+    public void StopTutorial()
+    {
+        isProcessing = true;
+        UIManager.Instance.SetMaskActive(false);
     }
 
     private void SetRandomPosition()
@@ -80,7 +89,11 @@ public class GameManager : MonoSingleton<GameManager>
 
         for(int i = 0; i < unitList.Count; i++)
         {
-            unitList[i].transform.parent.DOMove(new Vector2(4, 0), 1).From();
+            unitList[i].transform.parent.DOMove(new Vector2(4, 0), 1).From().OnComplete(()=>
+            {
+                if (!FileManager.Instance.save.hadTutorial)
+                    DoTutorial();
+            });
         }
 
         usedVector.Clear();
@@ -99,25 +112,28 @@ public class GameManager : MonoSingleton<GameManager>
     public void SetGame() //단계 넘어갈때
     {
         if (!isProcessing) return;
-        SetAllUnit(false);
-        stageHad++;
-        mode++;
-        if(mode >= 6)
+        lock (_lock)
         {
-            mode = 1;
-        }
-        unitHave = 0;
-        pickedUnitsCnt = 0;
-        isPicked = false;
-        isThrew = false;
-        SetRandomPosition();
-        UIManager.Instance.ResetList();
-        TimeManager.Instance.SetTimer(1);
-        TimeManager.Instance.SetTimer(0, stageHad * 0.05f + 3);
-        foreach(var un in unitList)
-        {
-            un.SetFloat(false);
-            un.SetPick(false);
+            SetAllUnit(false);
+            stageHad++;
+            mode++;
+            if (mode >= 6)
+            {
+                mode = 1;
+            }
+            unitHave = 0;
+            pickedUnitsCnt = 0;
+            isPicked = false;
+            isThrew = false;
+            SetRandomPosition();
+            UIManager.Instance.ResetList();
+            TimeManager.Instance.SetTimer(1);
+            TimeManager.Instance.SetTimer(0, stageHad * 0.05f + 3);
+            foreach (var un in unitList)
+            {
+                un.SetFloat(false);
+                un.SetPick(false);
+            }
         }
     }
 
@@ -148,15 +164,18 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void GameOver()
     {
-        isProcessing = false;
-        SetAllUnit(false);
-        mode = 0;   
-        gameOverPanel.SetActive(true);
-        gameOverPanel.transform.DOMove(new Vector2(0, -6), .5f).From();
-        FileManager.Instance.SaveToJson();
-        UIManager.Instance._UICANVAS.SetActive(false);
-        TimeManager.Instance.SetTimer(0, 1);
-        TimeManager.Instance.SetTimer(-1);
+        lock (_lock)
+        {
+            isProcessing = false;
+            SetAllUnit(false);
+            mode = 0;
+            gameOverPanel.SetActive(true);
+            gameOverPanel.transform.DOMove(new Vector2(0, -6), .5f).From();
+            FileManager.Instance.SaveToJson();
+            UIManager.Instance._UICANVAS.SetActive(false);
+            TimeManager.Instance.SetTimer(0, 1);
+            TimeManager.Instance.SetTimer(-1);
+        }
     }
 
     public void Home()
