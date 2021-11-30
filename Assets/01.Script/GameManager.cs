@@ -36,7 +36,7 @@ public class GameManager : MonoSingleton<GameManager>
         {
             CheckClick();
         }
-        if (TimeManager.Instance.CheckTimer() && isCleared)
+        if (TimeManager.Instance.CheckTimer() && !isCleared)
         {
             GameOver();
         }
