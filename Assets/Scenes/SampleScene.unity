@@ -982,7 +982,7 @@ GameObject:
   - component: {fileID: 342323813}
   - component: {fileID: 342323815}
   m_Layer: 6
-  m_Name: GameObject
+  m_Name: Green
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1230,7 +1230,7 @@ GameObject:
   - component: {fileID: 436326100}
   - component: {fileID: 436326099}
   m_Layer: 9
-  m_Name: Hexagon Flat-Top (3)
+  m_Name: Unit3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1356,7 +1356,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: -3154150011874791226, guid: cac230bd3878d5c4491d8425a90e123a, type: 3}
+  m_Sprite: {fileID: -7808734593389313954, guid: cac230bd3878d5c4491d8425a90e123a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2188,7 +2188,7 @@ GameObject:
   - component: {fileID: 764187709}
   - component: {fileID: 764187708}
   m_Layer: 7
-  m_Name: Hexagon Flat-Top (1)
+  m_Name: Unit1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2314,7 +2314,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: -3154150011874791226, guid: cac230bd3878d5c4491d8425a90e123a, type: 3}
+  m_Sprite: {fileID: -3387478527075654864, guid: cac230bd3878d5c4491d8425a90e123a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2433,7 +2433,7 @@ GameObject:
   - component: {fileID: 798894786}
   - component: {fileID: 798894789}
   m_Layer: 9
-  m_Name: GameObject
+  m_Name: Blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4681,7 +4681,7 @@ GameObject:
   - component: {fileID: 1417111861}
   - component: {fileID: 1417111860}
   m_Layer: 10
-  m_Name: Hexagon Flat-Top (4)
+  m_Name: Unit4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4807,7 +4807,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: -3154150011874791226, guid: cac230bd3878d5c4491d8425a90e123a, type: 3}
+  m_Sprite: {fileID: -5877259873991932285, guid: cac230bd3878d5c4491d8425a90e123a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5029,7 +5029,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 4135, y: 0}
+  m_SizeDelta: {x: 4360, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1431962539
 MonoBehaviour:
@@ -5086,7 +5086,7 @@ GameObject:
   - component: {fileID: 1451513607}
   - component: {fileID: 1451513612}
   m_Layer: 6
-  m_Name: Hexagon Flat-Top
+  m_Name: Unit0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5252,7 +5252,7 @@ GameObject:
   - component: {fileID: 1523855568}
   - component: {fileID: 1523855571}
   m_Layer: 8
-  m_Name: GameObject (1)
+  m_Name: Red
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5670,7 +5670,7 @@ GameObject:
   - component: {fileID: 1654729468}
   - component: {fileID: 1654729471}
   m_Layer: 10
-  m_Name: GameObject (1)
+  m_Name: Purple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6373,7 +6373,7 @@ GameObject:
   - component: {fileID: 1816511305}
   - component: {fileID: 1816511304}
   m_Layer: 8
-  m_Name: Hexagon Flat-Top (2)
+  m_Name: Unit2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6499,7 +6499,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: -3154150011874791226, guid: cac230bd3878d5c4491d8425a90e123a, type: 3}
+  m_Sprite: {fileID: 4837840602407752856, guid: cac230bd3878d5c4491d8425a90e123a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -6693,7 +6693,7 @@ GameObject:
   - component: {fileID: 1927724710}
   - component: {fileID: 1927724713}
   m_Layer: 7
-  m_Name: GameObject
+  m_Name: Pink
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
