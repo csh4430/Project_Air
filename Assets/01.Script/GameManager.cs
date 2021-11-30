@@ -24,6 +24,9 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void Start()
     {
+        //if (!FileManager.Instance.save.hadTutorial)
+        //    DoTutorial();
+
         UIManager.Instance.SetHighestYearText(FileManager.Instance.save.highestYear);
     }
 
@@ -33,20 +36,18 @@ public class GameManager : MonoSingleton<GameManager>
         {
             CheckClick();
         }
-        if (TimeManager.Instance.CheckTimer())
+        if (TimeManager.Instance.CheckTimer() && isCleared)
         {
             GameOver();
         }
-
-        //QuitGame();
     }
 
-    private void QuitGame()
+    private void DoTutorial()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
+        FileManager.Instance.save.hadTutorial = true;
+        FileManager.Instance.SaveToJson();
+        Time.timeScale = 0;
+
     }
 
     private void SetRandomPosition()
@@ -98,6 +99,7 @@ public class GameManager : MonoSingleton<GameManager>
     public void SetGame() //단계 넘어갈때
     {
         if (!isProcessing) return;
+        SetAllUnit(false);
         stageHad++;
         mode++;
         if(mode >= 6)
@@ -146,9 +148,9 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void GameOver()
     {
+        isProcessing = false;
         SetAllUnit(false);
         mode = 0;   
-        isProcessing = false;
         gameOverPanel.SetActive(true);
         gameOverPanel.transform.DOMove(new Vector2(0, -6), .5f).From();
         FileManager.Instance.SaveToJson();

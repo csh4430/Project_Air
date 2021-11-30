@@ -41,7 +41,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void SetHighestYearText(int years)
     {
-        highestYearsCntText.text = years.ToString();
+        highestYearsCntText.text = string.Format("BEST {0}", years);
     }
 
     public void SetSliderValue(float val)
