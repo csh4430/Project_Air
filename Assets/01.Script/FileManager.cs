@@ -42,6 +42,14 @@ public class FileManager : MonoSingleton<FileManager>
         }
         return null;
     }
+
+    public void ResetJson()
+    {
+        save = new Save();
+        SaveToJson();
+        UIManager.Instance.SetHighestYearText(save.highestYear);
+    }
+
     private void OnApplicationQuit()
     {
         SaveToJson();

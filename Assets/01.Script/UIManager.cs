@@ -95,4 +95,10 @@ public class UIManager : MonoSingleton<UIManager>
         callBack();
     }
 
+    public void SetSetting(GameObject gameObject)
+    {
+        gameObject.SetActive(!gameObject.activeInHierarchy);
+        Time.timeScale = !gameObject.activeInHierarchy ? 1 : 0;
+        GameManager.Instance.PauseGame(gameObject.activeInHierarchy);
+    }
 }

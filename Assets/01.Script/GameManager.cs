@@ -27,10 +27,6 @@ public class GameManager : MonoSingleton<GameManager>
     {
         isProcessing = true;
     }
-    private void Start()
-    {
-        UIManager.Instance.SetHighestYearText(FileManager.Instance.save.highestYear);
-    }
 
     private void Update()
     {
@@ -42,6 +38,11 @@ public class GameManager : MonoSingleton<GameManager>
         {
             GameOver();
         }
+    }
+
+    public void PauseGame(bool isOn)
+    {
+        isProcessing = !isOn;
     }
 
     private void DoTutorial()
@@ -112,6 +113,7 @@ public class GameManager : MonoSingleton<GameManager>
     public void SetGame() //단계 넘어갈때
     {
         if (!isProcessing) return;
+
         isSpread = false;
         SetAllUnit(false);
         stageHad++;
@@ -125,6 +127,7 @@ public class GameManager : MonoSingleton<GameManager>
         isPicked = false;
         isThrew = false;
         SetRandomPosition();
+        UIManager.Instance.SetHighestYearText(FileManager.Instance.save.highestYear);
         UIManager.Instance.ResetList();
         TimeManager.Instance.SetTimer(1);
         TimeManager.Instance.SetTimer(0, stageHad * 0.05f + 3);
