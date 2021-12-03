@@ -154,6 +154,7 @@ public class GameManager : MonoSingleton<GameManager>
         unitHave = 0;
         years = 0;
         mode = 1;
+        UIManager.Instance.StageShowImageChange(mode - 1);
         SetRandomPosition();
         UIManager.Instance.ResetList();
         TimeManager.Instance.SetTimer(0);
