@@ -26,6 +26,7 @@ public class GameManager : MonoSingleton<GameManager>
     private void Awake()
     {
         Application.targetFrameRate = 60;
+        Screen.SetResolution(2960, 1440, true);
 
         isProcessing = true;
     }
