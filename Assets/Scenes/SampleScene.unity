@@ -2593,10 +2593,10 @@ RectTransform:
   m_Father: {fileID: 835465638}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 312.3, y: -305.4}
-  m_SizeDelta: {x: 424.59998, y: 163.59999}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &599154994
 MonoBehaviour:
@@ -2960,10 +2960,10 @@ RectTransform:
   m_Father: {fileID: 835465638}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 312.3, y: -141.79999}
-  m_SizeDelta: {x: 424.59998, y: 163.59999}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &753558424
 MonoBehaviour:
@@ -3026,8 +3026,8 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.8679245, g: 0.8679245, b: 0.8679245, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -8345,10 +8345,10 @@ RectTransform:
   m_Father: {fileID: 835465638}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 312.3, y: -468.99997}
-  m_SizeDelta: {x: 424.59998, y: 163.59999}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1856048591
 MonoBehaviour:
@@ -8461,7 +8461,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1856482379
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9383,6 +9383,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 519d3d96e17f7f14dbfde8cfb30d953f, type: 3}
   - {fileID: 21300000, guid: cb089db8e1b8143439592af3aef2ac29, type: 3}
   - {fileID: 21300000, guid: 43c38ce28ea000b438718b52b7e27f89, type: 3}
+  soundMuteImage:
+  - {fileID: 21300000, guid: e9cf9d42693de014793f55aebbbec455, type: 3}
+  - {fileID: 21300000, guid: cc22b615443805549b67588c73c27bca, type: 3}
+  soundMuteButton: {fileID: 753558426}
 --- !u!114 &2051200311
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -54,10 +54,12 @@ public class SoundManager : MonoSingleton<SoundManager>
         if (soundOn)
         {
             mainMixer.audioMixer.SetFloat("Master", 0);
+            UIManager.Instance.SoundMuteMuttonImageChange(false);
         }
         else
         {
             mainMixer.audioMixer.SetFloat("Master", -80);
+            UIManager.Instance.SoundMuteMuttonImageChange(true);
         }
     }
 }

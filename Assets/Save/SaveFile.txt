@@ -2,5 +2,5 @@
     "skinNum": 0,
     "skinCnt": 0,
     "highestYear": 0,
-    "hadTutorial": true
+    "hadTutorial": false
 }

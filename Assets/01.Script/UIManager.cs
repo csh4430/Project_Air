@@ -15,6 +15,8 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField] private RectTransform maskRect = null;
     [SerializeField] private Image stageShowImage = null;
     [SerializeField] private Sprite[] stageShowImages = null;
+    [SerializeField] private Sprite[] soundMuteImage = null;
+    [SerializeField] private Button soundMuteButton = null;
     public GameObject _UICANVAS { get { return uiCanvasObject; } }
 
     public List<GameObject> Units
@@ -107,5 +109,13 @@ public class UIManager : MonoSingleton<UIManager>
     public void StageShowImageChange(int stage)
     {
         stageShowImage.sprite = stageShowImages[stage];
+    }
+
+    public void SoundMuteMuttonImageChange(bool isMute)
+    {
+        if (isMute)
+            soundMuteButton.GetComponent<Image>().sprite = soundMuteImage[0];
+        else
+            soundMuteButton.GetComponent<Image>().sprite = soundMuteImage[1];
     }
 }
