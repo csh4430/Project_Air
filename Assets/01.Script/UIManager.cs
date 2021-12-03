@@ -13,6 +13,8 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField] private Slider timeLimitSlider = null;
     [SerializeField] private GameObject uiCanvasObject = null;
     [SerializeField] private RectTransform maskRect = null;
+    [SerializeField] private Image stageShowImage = null;
+    [SerializeField] private Sprite[] stageShowImages = null;
     public GameObject _UICANVAS { get { return uiCanvasObject; } }
 
     public List<GameObject> Units
@@ -100,5 +102,10 @@ public class UIManager : MonoSingleton<UIManager>
         gameObject.SetActive(!gameObject.activeInHierarchy);
         Time.timeScale = !gameObject.activeInHierarchy ? 1 : 0;
         GameManager.Instance.PauseGame(gameObject.activeInHierarchy);
+    }
+
+    public void StageShowImageChange(int stage)
+    {
+        stageShowImage.sprite = stageShowImages[stage];
     }
 }

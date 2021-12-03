@@ -116,6 +116,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         if (!isProcessing) return;
 
+        UIManager.Instance.StageShowImageChange(mode);
         isSpread = false;
         SetAllUnit(false);
         stageHad++;
