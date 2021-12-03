@@ -9296,11 +9296,11 @@ MonoBehaviour:
   maskRect: {fileID: 780821340}
   stageShowImage: {fileID: 1644218747}
   stageShowImages:
-  - {fileID: 21300000, guid: 892a38572cdf06c4799f13620c0c2f93, type: 3}
-  - {fileID: 21300000, guid: 641e1785966f0f840a26b672935e0d40, type: 3}
-  - {fileID: 21300000, guid: 4895fb70d2df66c4d9332f6bc9f23082, type: 3}
-  - {fileID: 21300000, guid: 1914150747d6c80448b9c5ce8695adf5, type: 3}
-  - {fileID: 21300000, guid: d841e5b35da6fe34095d3e2d3c6d6a56, type: 3}
+  - {fileID: 21300000, guid: e7ef035f18817424eb8014dc16a16467, type: 3}
+  - {fileID: 21300000, guid: 7941682c77c4bc642a13fe17d9cf01fc, type: 3}
+  - {fileID: 21300000, guid: 519d3d96e17f7f14dbfde8cfb30d953f, type: 3}
+  - {fileID: 21300000, guid: cb089db8e1b8143439592af3aef2ac29, type: 3}
+  - {fileID: 21300000, guid: 43c38ce28ea000b438718b52b7e27f89, type: 3}
 --- !u!114 &2051200311
 MonoBehaviour:
   m_ObjectHideFlags: 0
