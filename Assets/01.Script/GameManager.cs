@@ -318,8 +318,4 @@ public class GameManager : MonoSingleton<GameManager>
             un.SetFloat(true);
         }
     }
-    public void QuitClick()
-    {
-        Application.Quit();
-    }
 }

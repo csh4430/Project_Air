@@ -1,6 +1,6 @@
 ﻿{
     "skinNum": 0,
     "skinCnt": 0,
-    "highestYear": 0,
-    "hadTutorial": false
+    "highestYear": 2,
+    "hadTutorial": true
 }

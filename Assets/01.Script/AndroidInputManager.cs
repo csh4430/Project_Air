@@ -18,14 +18,19 @@ public class AndroidInputManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("Quit");
+                Quit();
+            }
+        }
+    }
+
+    public void Quit()
+    {
+        Debug.Log("Quit");
 #if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
+        UnityEditor.EditorApplication.isPlaying = false;
 #else
                 Application.Quit();
 #endif
-            }
-        }
     }
 
     private void PrepareToQuit()
