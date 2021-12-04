@@ -130,6 +130,7 @@ public class GameManager : MonoSingleton<GameManager>
     public void SetGame() //단계 넘어갈때
     {
         if (!isProcessing) return;
+        if (Time.timeScale == 0) Time.timeScale = 1;
         isSpread = false;
         SetAllUnit(false);
         stageHad++;
