@@ -24,7 +24,7 @@ public class SoundManager : MonoSingleton<SoundManager>
         audio.clip = FindClip(type, key);
     }
 
-    private AudioClip FindClip(string type ,string key)
+    public AudioClip FindClip(string type,string key)
     {
         switch (type)
         {

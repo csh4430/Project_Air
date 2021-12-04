@@ -10,11 +10,13 @@ public class Units : MonoBehaviour
 
     private Animator unitAni = null;
     private Rigidbody2D unitRigid = null;
+    private AudioSource audio = null;
 
     private void Awake()
     {
         unitAni = GetComponent<Animator>();
         unitRigid = GetComponent<Rigidbody2D>();
+        audio = GetComponent<AudioSource>();
     }
     private void Update()
     {
@@ -49,6 +51,8 @@ public class Units : MonoBehaviour
         isFloating = floated;
         if (isFloating)
         {
+            SoundManager.Instance.SetSoundClip(audio, "Units", "Throw");
+            audio.Play();
             unitAni.SetBool("isFloat", true);
             unitRigid.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
             transform.position = new Vector3(transform.position.x,transform.position.y, -2);

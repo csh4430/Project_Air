@@ -17,6 +17,9 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField] private Sprite[] stageShowImages = null;
     [SerializeField] private Sprite[] soundMuteImage = null;
     [SerializeField] private Button soundMuteButton = null;
+    [SerializeField] private Button BounceAllButton = null;
+    [SerializeField] private Text[] EndYearText = new Text[2];
+    
     public GameObject _UICANVAS { get { return uiCanvasObject; } }
 
     public List<GameObject> Units
@@ -25,6 +28,12 @@ public class UIManager : MonoSingleton<UIManager>
         {
             return units;
         }
+    }
+
+
+    public void Awake()
+    {
+        BounceAllButton.onClick.AddListener(GameManager.Instance.BounceAll);
     }
 
     public void GetUnits(int num, int cnt)
@@ -74,10 +83,12 @@ public class UIManager : MonoSingleton<UIManager>
     {
         tutorialText.transform.position = pos;
         StartCoroutine(TypeText(tutorialText, "공기놀이는 해 봤겠지만", () => {
-            StartCoroutine(TypeText(tutorialText, "내가 설명해줄게", () => {
+            StartCoroutine(TypeText(tutorialText, "내가 설명해줄게!", () => {
                 StartCoroutine(TypeText(tutorialText, "일단 공기를 한번 눌러 선택하고", () => {
-                    StartCoroutine(TypeText(tutorialText, "한 번 더 눌러, 공기를 띄우고", () => {
-                        StartCoroutine(TypeText(tutorialText, "단계에 따라 공기를 주워!", GameManager.Instance.StopTutorial));
+                    StartCoroutine(TypeText(tutorialText, "한 번 더 눌러서, 공기를 띄워!", () => {
+                        StartCoroutine(TypeText(tutorialText, "그다음, 단계에 따라 공기를 주워!", () => {
+                            StartCoroutine(TypeText(tutorialText, "쉽지? 그럼 힘내!", GameManager.Instance.StopTutorial));
+                        }));
                     }));
                 }));
             }));
@@ -108,7 +119,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void StageShowImageChange(int stage)
     {
-        stageShowImage.sprite = stageShowImages[stage];
+        stageShowImage.sprite = stageShowImages[stage - 1];
     }
 
     public void SoundMuteMuttonImageChange(bool isMute)
@@ -117,5 +128,11 @@ public class UIManager : MonoSingleton<UIManager>
             soundMuteButton.GetComponent<Image>().sprite = soundMuteImage[0];
         else
             soundMuteButton.GetComponent<Image>().sprite = soundMuteImage[1];
+    }
+
+    public void SetEndText(int year, int highestYear)
+    {
+        EndYearText[0].text = string.Format("년수: {0}", year);
+        EndYearText[1].text = string.Format("최고 년수: {0}", highestYear);
     }
 }

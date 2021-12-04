@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class GameManager : MonoSingleton<GameManager>
 {
@@ -10,7 +11,9 @@ public class GameManager : MonoSingleton<GameManager>
     private List<Vector2> usedVector = new List<Vector2>();
     [SerializeField] private GameObject gameOverPanel = null;
     [SerializeField] private GameObject gameStartPanel = null;
+    [SerializeField] private Button startBtn = null;
 
+    private AudioSource audio = null;
     private bool isPicked = false;
     private bool isThrew = false;
     private bool isChecking = false;
@@ -25,10 +28,20 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void Awake()
     {
+        audio = GetComponent<AudioSource>();
         Application.targetFrameRate = 60;
         Screen.SetResolution(2960, 1440, true);
 
         isProcessing = true;
+    }
+
+    private void Start()
+    {
+        startBtn.onClick.AddListener(() =>
+        {
+            SoundManager.Instance.SetSoundClip(audio, "UI", "BB");
+            audio.Play();
+        });
     }
 
     private void Update()
@@ -89,17 +102,18 @@ public class GameManager : MonoSingleton<GameManager>
             Debug.Log(i);
         }
         SetAllUnit(true);
+        audio.PlayOneShot(SoundManager.Instance.FindClip("Units", "Roll"));
 
-        for(int i = 0; i < unitList.Count; i++)
+        for (int i = 0; i < unitList.Count; i++)
         {
             unitList[i].transform.parent.DOMove(new Vector2(4, 0), 1).From().OnComplete(()=>
             {
                 if (!FileManager.Instance.save.hadTutorial)
                     DoTutorial();
+                isSpread = true;
             });
         }
 
-        isSpread = true;
         usedVector.Clear();
     }
 
@@ -116,8 +130,6 @@ public class GameManager : MonoSingleton<GameManager>
     public void SetGame() //단계 넘어갈때
     {
         if (!isProcessing) return;
-
-        UIManager.Instance.StageShowImageChange(mode);
         isSpread = false;
         SetAllUnit(false);
         stageHad++;
@@ -126,6 +138,7 @@ public class GameManager : MonoSingleton<GameManager>
         {
             mode = 1;
         }
+        UIManager.Instance.StageShowImageChange(mode);
         unitHave = 0;
         pickedUnitsCnt = 0;
         isPicked = false;
@@ -155,7 +168,7 @@ public class GameManager : MonoSingleton<GameManager>
         unitHave = 0;
         years = 0;
         mode = 1;
-        UIManager.Instance.StageShowImageChange(mode - 1);
+        UIManager.Instance.StageShowImageChange(1);
         SetRandomPosition();
         UIManager.Instance.ResetList();
         TimeManager.Instance.SetTimer(0);
@@ -171,6 +184,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void GameOver()
     {
+        UIManager.Instance.SetEndText(years, FileManager.Instance.save.highestYear);
         isProcessing = false;
         SetAllUnit(false);
         mode = 0;
@@ -231,6 +245,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void CheckClick()
     {
+        if (!isSpread) return;
         if (Input.GetMouseButtonDown(0))
         {
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
@@ -248,8 +263,9 @@ public class GameManager : MonoSingleton<GameManager>
                         {
                             if (isThrew)
                             {
-                                TimeManager.Instance.SetTimer(0, stageHad * 0.05f + 3);
+                                audio.PlayOneShot(SoundManager.Instance.FindClip("Units", "Catch"));
 
+                                TimeManager.Instance.SetTimer(0, stageHad * 0.05f + 3);
                                 un.transform.parent.gameObject.SetActive(false);
                                 UIManager.Instance.SetYearText(++years);
                                 if(years > FileManager.Instance.save.highestYear)
@@ -266,6 +282,7 @@ public class GameManager : MonoSingleton<GameManager>
                                 }
                                 return;
                             }
+                            return;
                         }
 
                         if (!isPicked)
@@ -299,8 +316,8 @@ public class GameManager : MonoSingleton<GameManager>
 
                                 if (isThrew && !isChecking)
                                 {
+                                    audio.PlayOneShot(SoundManager.Instance.FindClip("Units", "Catch"));
                                     TimeManager.Instance.SetTimer(0, stageHad * 0.05f + 3);
-
                                     un.transform.parent.gameObject.SetActive(false);
                                     pickedUnitsCnt++;
                                     UIManager.Instance.GetUnits(unitList.IndexOf(un), ++unitHave);
@@ -315,7 +332,8 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void BounceAll()
     {
-        if (mode != 5) return;
+        if (mode != 5) return; 
+        if (!isSpread) return;
         if (isThrew) return; 
         isThrew = true;
         foreach (var un in unitList)
