@@ -10,7 +10,7 @@ public class FileManager : MonoSingleton<FileManager>
     private readonly string SAVE_FILING = "/SaveFile.txt";
     private void Awake()
     {
-        SAVE_PATH = Application.dataPath + "/Save";  /*persistentDataPath (for Android)*/
+        SAVE_PATH = Application.persistentDataPath + "/Save";  /*persistentDataPath (for Android)*/
         if (!Directory.Exists(SAVE_PATH))
         {
             Directory.CreateDirectory(SAVE_PATH);
@@ -20,7 +20,7 @@ public class FileManager : MonoSingleton<FileManager>
     }
     public void SaveToJson()
     {
-        SAVE_PATH = Application.dataPath + "/Save";  /*persistentDataPath(for Android)*/
+        SAVE_PATH = Application.persistentDataPath + "/Save";  /*persistentDataPath(for Android)*/
         if (save == null) return;
         string json = JsonUtility.ToJson(save, true);
         File.WriteAllText(SAVE_PATH + SAVE_FILING, json, System.Text.Encoding.UTF8);

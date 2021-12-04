@@ -117,6 +117,10 @@ public class UIManager : MonoSingleton<UIManager>
         GameManager.Instance.PauseGame(gameObject.activeInHierarchy);
     }
 
+    public void Show(GameObject gameObject)
+    {
+        gameObject.SetActive(!gameObject.activeInHierarchy);
+    }
     public void StageShowImageChange(int stage)
     {
         stageShowImage.sprite = stageShowImages[stage - 1];

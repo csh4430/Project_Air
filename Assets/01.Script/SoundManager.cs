@@ -12,7 +12,6 @@ public class SoundManager : MonoSingleton<SoundManager>
         public AudioClip clips;
     }
 
-    [SerializeField] private AudioClip backgrounMusic = null;
     [SerializeField] private List<SoundClip> unitsSoundList = new List<SoundClip>();
     [SerializeField] private List<SoundClip> uiSoundList = new List<SoundClip>();
     [SerializeField] private AudioMixerGroup mainMixer = null;

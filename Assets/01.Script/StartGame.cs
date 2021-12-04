@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using DG.Tweening;
 
@@ -12,6 +12,6 @@ public class StartGame : MonoBehaviour
     private void Start()
     {
         logoImage.DOColor(Color.white, 2);
-        logoImage.transform.DOScale(Vector2.one * 0.8f, 2).OnComplete(()=> { EditorSceneManager.LoadScene(1); });
+        logoImage.transform.DOScale(Vector2.one * 0.8f, 2).OnComplete(()=> { SceneManager.LoadScene(1); });
     }
 }

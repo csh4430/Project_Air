@@ -29,8 +29,7 @@ public class GameManager : MonoSingleton<GameManager>
     private void Awake()
     {
         audio = GetComponent<AudioSource>();
-        Application.targetFrameRate = 60;
-        Screen.SetResolution(2960, 1440, true);
+        Application.targetFrameRate = 30;
 
         isProcessing = true;
     }
@@ -39,8 +38,12 @@ public class GameManager : MonoSingleton<GameManager>
     {
         startBtn.onClick.AddListener(() =>
         {
+
+            Time.timeScale = 1;
+            isProcessing = true;
             SoundManager.Instance.SetSoundClip(audio, "UI", "BB");
             audio.Play();
+            SetGame();
         });
     }
 
@@ -98,7 +101,7 @@ public class GameManager : MonoSingleton<GameManager>
             } while (usedVector.Contains(new Vector3(valX, valY, valY)));
             usedVector.Add(new Vector2(valX, valY));
 
-            unitList[i].transform.parent.position = new Vector3(valX, valY, valY);
+            unitList[i].transform.parent.position = new Vector3(valX + 0.5f, valY, valY);
             Debug.Log(i);
         }
         SetAllUnit(true);
@@ -130,7 +133,6 @@ public class GameManager : MonoSingleton<GameManager>
     public void SetGame() //단계 넘어갈때
     {
         if (!isProcessing) return;
-        if (Time.timeScale == 0) Time.timeScale = 1;
         isSpread = false;
         SetAllUnit(false);
         stageHad++;
