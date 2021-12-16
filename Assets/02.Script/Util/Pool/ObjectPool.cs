@@ -60,7 +60,7 @@ public class ObjectPool : MonoBehaviour
     {
         switch (obj.tag)
         {
-            case "Coin":
+            case "Content":
                 if (obj.transform.parent == gameObject.transform)
                     return;
                 break;
