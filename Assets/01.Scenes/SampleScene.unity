@@ -1602,7 +1602,7 @@ GameObject:
   - component: {fileID: 436326099}
   - component: {fileID: 436326104}
   m_Layer: 9
-  m_Name: Unit3
+  m_Name: Unit3_Blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3211,7 +3211,7 @@ GameObject:
   - component: {fileID: 764187708}
   - component: {fileID: 764187713}
   m_Layer: 7
-  m_Name: Unit1
+  m_Name: Unit1_Pink
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5355,7 +5355,7 @@ GameObject:
   - component: {fileID: 1417111860}
   - component: {fileID: 1417111865}
   m_Layer: 10
-  m_Name: Unit4
+  m_Name: Unit4_Purple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6057,7 +6057,7 @@ GameObject:
   - component: {fileID: 1451513612}
   - component: {fileID: 1451513613}
   m_Layer: 6
-  m_Name: Unit0
+  m_Name: Unit0_Green
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7310,7 +7310,7 @@ GameObject:
   - component: {fileID: 1816511304}
   - component: {fileID: 1816511309}
   m_Layer: 8
-  m_Name: Unit2
+  m_Name: Unit2_Red
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8827,16 +8827,36 @@ MonoBehaviour:
     skinImage: {fileID: -3154150011874791226, guid: cac230bd3878d5c4491d8425a90e123a, type: 3}
     hasSkin: 0
     cost: 100
+    skinAnimator_Blue: {fileID: 0}
+    skinAnimator_Green: {fileID: 0}
+    skinAnimator_Pink: {fileID: 0}
+    skinAnimator_Purple: {fileID: 0}
+    skinAnimator_Red: {fileID: 0}
   - skinName: "\u3157\u3157"
     skinImage: {fileID: -3387478527075654864, guid: cac230bd3878d5c4491d8425a90e123a, type: 3}
     hasSkin: 0
     cost: 200
+    skinAnimator_Blue: {fileID: 0}
+    skinAnimator_Green: {fileID: 0}
+    skinAnimator_Pink: {fileID: 0}
+    skinAnimator_Purple: {fileID: 0}
+    skinAnimator_Red: {fileID: 0}
   - skinName: "\u3157\u3157\u3157"
     skinImage: {fileID: 4837840602407752856, guid: cac230bd3878d5c4491d8425a90e123a, type: 3}
     hasSkin: 0
     cost: 300
+    skinAnimator_Blue: {fileID: 0}
+    skinAnimator_Green: {fileID: 0}
+    skinAnimator_Pink: {fileID: 0}
+    skinAnimator_Purple: {fileID: 0}
+    skinAnimator_Red: {fileID: 0}
   contentPosition: {fileID: 1431962537}
-  units: []
+  units:
+  - {fileID: 436326097}
+  - {fileID: 1451513606}
+  - {fileID: 764187706}
+  - {fileID: 1417111858}
+  - {fileID: 1816511302}
 --- !u!1 &2069291894
 GameObject:
   m_ObjectHideFlags: 0

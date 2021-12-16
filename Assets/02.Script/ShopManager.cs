@@ -13,11 +13,11 @@ public class ShopManager : MonoBehaviour
         public Sprite skinImage;
         public bool hasSkin;
         public int cost;
-        //public AnimatorOverrideController skinAnimator_Blue; // 에니매이션 추가되면 함
-        //public AnimatorOverrideController skinAnimator_Green;
-        //public AnimatorOverrideController skinAnimator_Pink;
-        //public AnimatorOverrideController skinAnimator_Purple;
-        //public AnimatorOverrideController skinAnimator_Red;
+        public AnimatorOverrideController skinAnimator_Blue; // 에니매이션 추가되면 함
+        public AnimatorOverrideController skinAnimator_Green;
+        public AnimatorOverrideController skinAnimator_Pink;
+        public AnimatorOverrideController skinAnimator_Purple;
+        public AnimatorOverrideController skinAnimator_Red;
     }
 
     public List<ShopItems> shopItems = new List<ShopItems>();
@@ -48,17 +48,14 @@ public class ShopManager : MonoBehaviour
         ListContentChange();
     }
 
-    //void UnitAnimatorChange() // 유닛 스킨 끼는거
-    //{
-    //    for (int i = 0; i < shopItemGameObject.Count; i++)
-    //    {
-    //        units[0].GetComponent<Animator>().runtimeAnimatorController = shopItems[i].skinAnimator_Blue.runtimeAnimatorController;
-    //        units[1].GetComponent<Animator>().runtimeAnimatorController = shopItems[i].skinAnimator_Green.runtimeAnimatorController;
-    //        units[2].GetComponent<Animator>().runtimeAnimatorController = shopItems[i].skinAnimator_Pink.runtimeAnimatorController;
-    //        units[3].GetComponent<Animator>().runtimeAnimatorController = shopItems[i].skinAnimator_Purple.runtimeAnimatorController;
-    //        units[4].GetComponent<Animator>().runtimeAnimatorController = shopItems[i].skinAnimator_Red.runtimeAnimatorController;
-    //    }
-    //}
+    void UnitAnimatorChange(int i) // 유닛 스킨 끼는거
+    {
+        units[0].GetComponent<Animator>().runtimeAnimatorController = shopItems[i].skinAnimator_Blue.runtimeAnimatorController;
+        units[1].GetComponent<Animator>().runtimeAnimatorController = shopItems[i].skinAnimator_Green.runtimeAnimatorController;
+        units[2].GetComponent<Animator>().runtimeAnimatorController = shopItems[i].skinAnimator_Pink.runtimeAnimatorController;
+        units[3].GetComponent<Animator>().runtimeAnimatorController = shopItems[i].skinAnimator_Purple.runtimeAnimatorController;
+        units[4].GetComponent<Animator>().runtimeAnimatorController = shopItems[i].skinAnimator_Red.runtimeAnimatorController;
+    }
 
 
     void ListContentChange() // 각각의 내용물안에 내용 넣기
@@ -74,15 +71,31 @@ public class ShopManager : MonoBehaviour
             else
                 shopItemGameObject[i].transform.GetChild(3).GetChild(0).GetComponent<Text>().text = "BUY";
 
-            //if (shopItems[i].hasSkin)
-            //    shopItemGameObject[i].transform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => UnitAnimatorChange());
-            //else
-            //{
-            //    // 아마도 여기서 돈을 지불하는 코드
-            //    // 돈이 없으면 리턴
-            //    shopItemGameObject[i].transform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => UnitAnimatorChange());
-            //}
+            if (shopItems[i].hasSkin)
+                return;
+            //shopItemGameObject[i].transform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => UnitAnimatorChange(i));
+            else
+            {
+                // 아마도 여기서 돈을 지불하는 코드
+                // 돈이 없으면 리턴
+
+                //if(가진 돈이 없다면)
+                //    return;
+                //else
+                //{
+                //    돈--
+                //    ChangeHas(shopItems[i]);
+                    
+                //}
+
+                //shopItemGameObject[i].transform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => UnitAnimatorChange(i));
+            }
         }
+    }
+
+    void ChangeHas(ShopItems shopItems)
+    {
+        shopItems.hasSkin = true;
     }
 
     void Reset() // 안쓸 것 같은데 혹시 안에 있는 내용물 없에 버릴거면 이 함수쓰세요
