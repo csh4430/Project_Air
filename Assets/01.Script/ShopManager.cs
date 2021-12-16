@@ -1,33 +1,30 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShopManager : MonoSingleton<ShopManager>
+public class ShopManager : MonoBehaviour
 {
     [System.Serializable]
-    private struct ShopItem
+    public struct ShopItems
     {
-        public Sprite skinImage;
         public string skinName;
-        public bool hasKey;
+        public Image skinImage;
         public bool hasSkin;
+        public Animator skinAnimator;
     }
 
-    [SerializeField]
-    private List<ShopItem> shopItems = new List<ShopItem>();
-    [SerializeField]
-    private GameObject content = null;
-    [SerializeField, Tooltip("Content In The Contents")]
-    private GameObject nakami = null;
+    public List<ShopItems> shopItems = new List<ShopItems>();
 
     void Start()
     {
-        for (int i = 0; i < shopItems.Count; i++)
-        {
-            GameObject content = Instantiate(nakami, Vector2.zero, Quaternion.identity, this.content.transform);
-            content.GetComponent<ShopItems>().ConnectBuyButton(content.GetComponent<ShopItem>().hasSkin);
-        }
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 }
-

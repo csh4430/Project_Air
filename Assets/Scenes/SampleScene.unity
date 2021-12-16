@@ -1632,7 +1632,7 @@ Animator:
   m_GameObject: {fileID: 436326097}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 38c756cfb0721454f8e917028eda76f7, type: 2}
+  m_Controller: {fileID: 22100000, guid: 68d5cc8e5197a3a43a6b9d49e2185624, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -3241,7 +3241,7 @@ Animator:
   m_GameObject: {fileID: 764187706}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 3a3584a7cda75d044a78e51e533b5515, type: 2}
+  m_Controller: {fileID: 22100000, guid: 8fca01515f439bd4a83a88960be9a3b8, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -5385,7 +5385,7 @@ Animator:
   m_GameObject: {fileID: 1417111858}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a25c81e4bf35c1f42a2acc7a079a073f, type: 2}
+  m_Controller: {fileID: 22100000, guid: cc2705f8cebe58944adb54008080f5af, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -6200,7 +6200,7 @@ Animator:
   m_GameObject: {fileID: 1451513606}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9f8d87c424209794b8d74b5bba945740, type: 2}
+  m_Controller: {fileID: 22100000, guid: e2b8532ca539fdb4f8f83bac8e4638bc, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -7340,7 +7340,7 @@ Animator:
   m_GameObject: {fileID: 1816511302}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4478230ab37d21d48aca22dd18a67259, type: 2}
+  m_Controller: {fileID: 22100000, guid: 312a92821829f714aae6bd866dca874d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -8823,24 +8823,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shopItems:
-  - skinImage: {fileID: 0}
-    skinName: 
-    hasKey: 0
+  - skinName: 
+    skinImage: {fileID: 0}
     hasSkin: 0
-  - skinImage: {fileID: 0}
-    skinName: 
-    hasKey: 0
+    skinAnimator: {fileID: 0}
+  - skinName: 
+    skinImage: {fileID: 0}
     hasSkin: 0
-  - skinImage: {fileID: 0}
-    skinName: 
-    hasKey: 0
+    skinAnimator: {fileID: 0}
+  - skinName: 
+    skinImage: {fileID: 0}
     hasSkin: 0
-  - skinImage: {fileID: 0}
-    skinName: 
-    hasKey: 0
+    skinAnimator: {fileID: 0}
+  - skinName: 
+    skinImage: {fileID: 0}
     hasSkin: 0
-  content: {fileID: 1431962537}
-  nakami: {fileID: 3323371032732512808, guid: fb4601a8b90f1264eaa0efcd01c66253, type: 3}
+    skinAnimator: {fileID: 0}
+  - skinName: 
+    skinImage: {fileID: 0}
+    hasSkin: 0
+    skinAnimator: {fileID: 0}
 --- !u!1 &2069291894
 GameObject:
   m_ObjectHideFlags: 0
