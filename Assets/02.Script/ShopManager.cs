@@ -13,11 +13,11 @@ public class ShopManager : MonoBehaviour
         public Sprite skinImage;
         public bool hasSkin;
         public int cost;
-        public AnimatorOverrideController skinAnimator_Blue;
-        public AnimatorOverrideController skinAnimator_Green;
-        public AnimatorOverrideController skinAnimator_Pink;
-        public AnimatorOverrideController skinAnimator_Purple;
-        public AnimatorOverrideController skinAnimator_Red;
+        //public AnimatorOverrideController skinAnimator_Blue; // 에니매이션 추가되면 함
+        //public AnimatorOverrideController skinAnimator_Green;
+        //public AnimatorOverrideController skinAnimator_Pink;
+        //public AnimatorOverrideController skinAnimator_Purple;
+        //public AnimatorOverrideController skinAnimator_Red;
     }
 
     public List<ShopItems> shopItems = new List<ShopItems>();
@@ -48,17 +48,17 @@ public class ShopManager : MonoBehaviour
         ListContentChange();
     }
 
-    void UnitAnimatorChange() // 유닛 스킨 끼는거
-    {
-        for (int i = 0; i < shopItemGameObject.Count; i++)
-        {
-            units[0].GetComponent<Animator>().runtimeAnimatorController = shopItems[i].skinAnimator_Blue.runtimeAnimatorController;
-            units[1].GetComponent<Animator>().runtimeAnimatorController = shopItems[i].skinAnimator_Green.runtimeAnimatorController;
-            units[2].GetComponent<Animator>().runtimeAnimatorController = shopItems[i].skinAnimator_Pink.runtimeAnimatorController;
-            units[3].GetComponent<Animator>().runtimeAnimatorController = shopItems[i].skinAnimator_Purple.runtimeAnimatorController;
-            units[4].GetComponent<Animator>().runtimeAnimatorController = shopItems[i].skinAnimator_Red.runtimeAnimatorController;
-        }
-    }
+    //void UnitAnimatorChange() // 유닛 스킨 끼는거
+    //{
+    //    for (int i = 0; i < shopItemGameObject.Count; i++)
+    //    {
+    //        units[0].GetComponent<Animator>().runtimeAnimatorController = shopItems[i].skinAnimator_Blue.runtimeAnimatorController;
+    //        units[1].GetComponent<Animator>().runtimeAnimatorController = shopItems[i].skinAnimator_Green.runtimeAnimatorController;
+    //        units[2].GetComponent<Animator>().runtimeAnimatorController = shopItems[i].skinAnimator_Pink.runtimeAnimatorController;
+    //        units[3].GetComponent<Animator>().runtimeAnimatorController = shopItems[i].skinAnimator_Purple.runtimeAnimatorController;
+    //        units[4].GetComponent<Animator>().runtimeAnimatorController = shopItems[i].skinAnimator_Red.runtimeAnimatorController;
+    //    }
+    //}
 
 
     void ListContentChange() // 각각의 내용물안에 내용 넣기
@@ -68,14 +68,20 @@ public class ShopManager : MonoBehaviour
             shopItemGameObject[i].transform.GetChild(0).GetComponent<Image>().sprite = shopItems[i].skinImage;
             shopItemGameObject[i].transform.GetChild(1).GetComponent<Text>().text = shopItems[i].skinName;
             shopItemGameObject[i].transform.GetChild(2).GetComponent<Text>().text = shopItems[i].cost.ToString();
-            if(shopItems[i].hasSkin)
-                shopItemGameObject[i].transform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => UnitAnimatorChange());
+
+            if (shopItems[i].hasSkin)
+                shopItemGameObject[i].transform.GetChild(3).GetChild(0).GetComponent<Text>().text = "USE";
             else
-            {
-                // 아마도 여기서 돈을 지불하는 코드
-                // 돈이 없으면 리턴
-                shopItemGameObject[i].transform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => UnitAnimatorChange());
-            }
+                shopItemGameObject[i].transform.GetChild(3).GetChild(0).GetComponent<Text>().text = "BUY";
+
+            //if (shopItems[i].hasSkin)
+            //    shopItemGameObject[i].transform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => UnitAnimatorChange());
+            //else
+            //{
+            //    // 아마도 여기서 돈을 지불하는 코드
+            //    // 돈이 없으면 리턴
+            //    shopItemGameObject[i].transform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => UnitAnimatorChange());
+            //}
         }
     }
 

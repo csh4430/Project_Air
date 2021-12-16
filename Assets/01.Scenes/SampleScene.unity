@@ -8836,6 +8836,7 @@ MonoBehaviour:
     hasSkin: 0
     cost: 300
   contentPosition: {fileID: 1431962537}
+  units: []
 --- !u!1 &2069291894
 GameObject:
   m_ObjectHideFlags: 0
