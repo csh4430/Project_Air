@@ -31,16 +31,10 @@ public class ShopManager : MonoBehaviour
 
     void Start()
     {
-        CreateSkinList();
+        CreateSkinContent();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    void CreateSkinList()
+    void CreateSkinContent() // 상점에 content 추가하기
     {
         for (int i = 0; i < shopItems.Count; i++)
         {
@@ -54,7 +48,7 @@ public class ShopManager : MonoBehaviour
         ListContentChange();
     }
 
-    void UnitAnimatorChange()
+    void UnitAnimatorChange() // 유닛 스킨 끼는거
     {
         for (int i = 0; i < shopItemGameObject.Count; i++)
         {
@@ -67,18 +61,25 @@ public class ShopManager : MonoBehaviour
     }
 
 
-    void ListContentChange()
+    void ListContentChange() // 각각의 내용물안에 내용 넣기
     {
         for(int i = 0; i < shopItemGameObject.Count; i++)
         {
             shopItemGameObject[i].transform.GetChild(0).GetComponent<Image>().sprite = shopItems[i].skinImage;
             shopItemGameObject[i].transform.GetChild(1).GetComponent<Text>().text = shopItems[i].skinName;
             shopItemGameObject[i].transform.GetChild(2).GetComponent<Text>().text = shopItems[i].cost.ToString();
-            shopItemGameObject[i].transform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => UnitAnimatorChange());
+            if(shopItems[i].hasSkin)
+                shopItemGameObject[i].transform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => UnitAnimatorChange());
+            else
+            {
+                // 아마도 여기서 돈을 지불하는 코드
+                // 돈이 없으면 리턴
+                shopItemGameObject[i].transform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => UnitAnimatorChange());
+            }
         }
     }
 
-    void Reset()
+    void Reset() // 안쓸 것 같은데 혹시 안에 있는 내용물 없에 버릴거면 이 함수쓰세요
     {
         for(int i = 0; i < shopItemGameObject.Count; i++)
         {
