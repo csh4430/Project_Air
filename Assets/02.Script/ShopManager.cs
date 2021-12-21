@@ -64,14 +64,12 @@ public class ShopManager : MonoBehaviour
             shopItemGameObject[i].transform.GetChild(0).GetComponent<Image>().sprite = shopItems[i].skinImage;
             shopItemGameObject[i].transform.GetChild(1).GetComponent<Text>().text = shopItems[i].skinName;
             shopItemGameObject[i].transform.GetChild(2).GetComponent<Text>().text = shopItems[i].cost.ToString();
-
             shopItemGameObject[i].transform.GetChild(3).GetChild(0).GetComponent<Text>().text = shopItems[i].hasSkin ? "USE" : "BUY";
-
             shopItemGameObject[i].transform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => BuyOrUse(i));
         }
     }
 
-    void BuyOrUse(int i)
+    public void BuyOrUse(int i)
     {
         if (shopItems[i].hasSkin)
         {
@@ -79,7 +77,11 @@ public class ShopManager : MonoBehaviour
         }
         else
         {
-            // coin--;
+            if (FileManager.Instance.save.coin < shopItems[i].cost) return;
+            Debug.Log(FileManager.Instance.save.coin);
+            FileManager.Instance.save.coin -= shopItems[i].cost;
+            Debug.Log(FileManager.Instance.save.coin);
+            FileManager.Instance.SaveToJson();
             ChangeHas(shopItems[i]);
             UnitAnimatorChange(i);
         }

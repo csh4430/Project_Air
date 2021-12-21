@@ -8677,6 +8677,7 @@ MonoBehaviour:
     skinCnt: 0
     highestYear: 0
     hadTutorial: 0
+    coin: 10000
 --- !u!114 &2051200313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8827,29 +8828,17 @@ MonoBehaviour:
     skinImage: {fileID: -3154150011874791226, guid: cac230bd3878d5c4491d8425a90e123a, type: 3}
     hasSkin: 0
     cost: 100
-    skinAnimator_Blue: {fileID: 0}
-    skinAnimator_Green: {fileID: 0}
-    skinAnimator_Pink: {fileID: 0}
-    skinAnimator_Purple: {fileID: 0}
-    skinAnimator_Red: {fileID: 0}
+    skinAnimator: []
   - skinName: "\u3157\u3157"
     skinImage: {fileID: -3387478527075654864, guid: cac230bd3878d5c4491d8425a90e123a, type: 3}
     hasSkin: 0
     cost: 200
-    skinAnimator_Blue: {fileID: 0}
-    skinAnimator_Green: {fileID: 0}
-    skinAnimator_Pink: {fileID: 0}
-    skinAnimator_Purple: {fileID: 0}
-    skinAnimator_Red: {fileID: 0}
+    skinAnimator: []
   - skinName: "\u3157\u3157\u3157"
     skinImage: {fileID: 4837840602407752856, guid: cac230bd3878d5c4491d8425a90e123a, type: 3}
     hasSkin: 0
     cost: 300
-    skinAnimator_Blue: {fileID: 0}
-    skinAnimator_Green: {fileID: 0}
-    skinAnimator_Pink: {fileID: 0}
-    skinAnimator_Purple: {fileID: 0}
-    skinAnimator_Red: {fileID: 0}
+    skinAnimator: []
   contentPosition: {fileID: 1431962537}
   units:
   - {fileID: 436326097}

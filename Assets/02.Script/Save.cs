@@ -5,4 +5,5 @@ public class Save
     public int skinCnt;
     public int highestYear;
     public bool hadTutorial;
+    public int coin;
 }
